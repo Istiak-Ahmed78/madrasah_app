@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.madrasah_app">
    <application
-        android:label="madrasah_app"
+        android:label="HSSFM Log"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
