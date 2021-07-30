@@ -5,4 +5,6 @@ class RouteName {
   static const noInternetScreen = '/no_internet_Screen';
   static const profileScreen = '/profile_screen';
   static const spleshScreen = '/splesh_screen';
+  static const allAnnouncementScreen = '/announcement_screen';
+  // static const seeAllAnnouncement= ;
 }
