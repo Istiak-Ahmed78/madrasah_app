@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:madrasah_app/views/constants.dart';
+import 'package:madrasah_app/views/styles/styles.dart';
 
 class FeedPage extends StatelessWidget {
   const FeedPage({Key? key}) : super(key: key);
@@ -13,8 +14,8 @@ class FeedPage extends StatelessWidget {
           child: ListView.builder(
             itemCount: 1,
             itemBuilder: (context, index) => FeedItem(
-              feedText: dummyArticle,
-              imageAdress: nayagraWaterFall,
+              feedText: Strings.dummyDescribtion,
+              imageAdress: Images.nayagraWaterFall,
             ),
             shrinkWrap: true,
           ),
@@ -45,7 +46,7 @@ class FeedItem extends StatelessWidget {
             Row(
               children: [
                 CircleAvatar(
-                  backgroundImage: NetworkImage(dummyImageAdress),
+                  backgroundImage: NetworkImage(Strings.dummyDescribtion),
                 ),
                 SizedBox(
                   width: 10,
@@ -76,7 +77,7 @@ class FeedItem extends StatelessWidget {
               child: Text(
                 'A beautiful visit in Nayagra fall',
                 style: TextStyle(
-                  fontFamily: kOpenSans,
+                  fontFamily: Fonts.openSans,
                   fontWeight: FontWeight.bold,
                 ),
                 maxLines: 1,
@@ -92,7 +93,7 @@ class FeedItem extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 maxLines: 2,
                 style: TextStyle(
-                    fontFamily: kMonserrat, fontStyle: FontStyle.italic),
+                    fontFamily: Fonts.monserrat, fontStyle: FontStyle.italic),
               ),
             )
           ],

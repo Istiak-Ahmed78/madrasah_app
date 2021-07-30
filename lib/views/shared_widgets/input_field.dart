@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:madrasah_app/views/constants.dart';
 import 'package:madrasah_app/views/styles/styles.dart';
 
 class InputField extends StatefulWidget {
@@ -34,14 +33,14 @@ class _InputFieldState extends State<InputField> {
       height: 60,
       child: TextField(
         controller: widget.textEditingController,
-        cursorColor: kBlack,
+        cursorColor: CResources.black,
         obscureText: widget.isPass ? !isShow : false,
         keyboardType: widget.textInputType,
-        style: TextStyle(color: kBlack, fontFamily: kOpenSans),
+        style: TextStyle(color: CResources.black, fontFamily: Fonts.openSans),
         decoration: InputDecoration(
             hintText: widget.hintText,
             hintStyle: TextStyle(
-              color: kGrey,
+              color: CResources.black,
             ),
             enabledBorder: border,
             focusedBorder: border,
@@ -60,10 +59,10 @@ class _InputFieldState extends State<InputField> {
                     },
                     child: Icon(
                       isShow ? Icons.visibility_off : Icons.visibility,
-                      color: kGrey,
+                      color: CResources.grey,
                     ))
                 : null,
-            fillColor: kBlack.withOpacity(0.1),
+            fillColor: CResources.black.withOpacity(0.1),
             filled: true),
       ),
     );

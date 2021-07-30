@@ -20,8 +20,8 @@ class _NavBarState extends State<NavBar> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
-        selectedItemColor: kBlueGrey,
-        unselectedItemColor: kGrey,
+        selectedItemColor: CResources.blueGrey,
+        unselectedItemColor: CResources.grey,
         type: BottomNavigationBarType.fixed,
         onTap: (index) {
           setState(() {

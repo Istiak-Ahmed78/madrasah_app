@@ -1,10 +1,10 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:madrasah_app/views/constants.dart';
 import 'package:madrasah_app/views/screens/sign_up_screen/sign_up_screen.dart';
 import 'package:madrasah_app/views/shared_widgets/input_field.dart';
 import 'package:madrasah_app/views/shared_widgets/shared_widgets.dart';
 import 'package:madrasah_app/views/styles/colors.dart';
+import 'package:madrasah_app/views/styles/styles.dart';
 
 class AccountTab extends StatelessWidget {
   AccountTab({Key? key}) : super(key: key);
@@ -15,7 +15,7 @@ class AccountTab extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: kWhite,
+      backgroundColor: CResources.white,
       body: Center(
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 20),
@@ -27,7 +27,7 @@ class AccountTab extends StatelessWidget {
                 flex: 2,
               ),
               Text('Log in',
-                  style: TextStyle(fontSize: 30, fontFamily: kOpenSans)),
+                  style: TextStyle(fontSize: 30, fontFamily: Fonts.openSans)),
               SizedBox(
                 height: size.height * 0.1,
               ),
@@ -46,7 +46,7 @@ class AccountTab extends StatelessWidget {
                   icon: Icons.lock),
               Spacer(),
               DefaultButton(
-                primaryColor: kBlack,
+                primaryColor: CResources.black,
                 onTap: () {},
                 buttonText: 'Log In',
               ),
@@ -55,7 +55,7 @@ class AccountTab extends StatelessWidget {
                 text: TextSpan(children: [
                   TextSpan(
                       text: 'Don\'t have an account? ',
-                      style: TextStyle(color: kBlack)),
+                      style: TextStyle(color: CResources.black)),
                   TextSpan(
                       text: 'Create account',
                       recognizer: TapGestureRecognizer()
@@ -65,8 +65,8 @@ class AccountTab extends StatelessWidget {
                               MaterialPageRoute(
                                   builder: (context) => SignUpScreen()));
                         },
-                      style:
-                          TextStyle(color: kRed, fontWeight: FontWeight.bold))
+                      style: TextStyle(
+                          color: CResources.red, fontWeight: FontWeight.bold))
                 ]),
               ),
               Spacer()

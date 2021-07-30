@@ -1,2 +1,3 @@
 export 'colors.dart';
-export 'paddings.dart';
+export 'dimentions.dart';
+export 'fonts.dart';

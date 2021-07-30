@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:madrasah_app/views/constants.dart';
+import 'package:madrasah_app/views/styles/styles.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 class ShowFullAnnoucement extends StatelessWidget {
@@ -27,7 +28,7 @@ class ShowFullAnnoucement extends StatelessWidget {
               maxLines: 3,
               style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontFamily: kOpenSans,
+                  fontFamily: Fonts.openSans,
                   fontSize: 20),
             ),
             SizedBox(

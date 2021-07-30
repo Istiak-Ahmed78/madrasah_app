@@ -10,8 +10,8 @@ class DefaultButton extends StatelessWidget {
       {Key? key,
       required this.onTap,
       required this.buttonText,
-      this.primaryColor = kBlack,
-      this.textColor = kWhite})
+      this.primaryColor = CResources.black,
+      this.textColor = CResources.white})
       : super(key: key);
 
   @override
@@ -23,7 +23,7 @@ class DefaultButton extends StatelessWidget {
           onPressed: onTap,
           child: Text(
             buttonText,
-            style: TextStyle(color: kWhite),
+            style: TextStyle(color: CResources.white),
           ),
           style: ButtonStyle(
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(

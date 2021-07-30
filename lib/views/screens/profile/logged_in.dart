@@ -9,7 +9,7 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kBackGroundColor,
+      backgroundColor: CResources.defalutBacGroundColor,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Center(
@@ -28,9 +28,9 @@ class ProfilePage extends StatelessWidget {
                         width: 90,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: kTeal.withOpacity(0.1),
+                          color: CResources.teal.withOpacity(0.1),
                           image: DecorationImage(
-                              image: NetworkImage(dummyImageAdress),
+                              image: NetworkImage(Strings.mohammadSMStory),
                               fit: BoxFit.cover),
                           boxShadow: [
                             BoxShadow(
@@ -55,11 +55,12 @@ class ProfilePage extends StatelessWidget {
                               Text(
                                 'Istiak Ahmed',
                                 style: TextStyle(
-                                    fontFamily: kOpenSans,
+                                    fontFamily: Fonts.openSans,
                                     fontSize: 25,
                                     shadows: [
                                       Shadow(
-                                          color: kBlack.withOpacity(0.3),
+                                          color:
+                                              CResources.black.withOpacity(0.3),
                                           offset: Offset(0, 2))
                                     ],
                                     fontWeight: FontWeight.bold),
@@ -76,12 +77,13 @@ class ProfilePage extends StatelessWidget {
                                       text: TextSpan(children: [
                                     TextSpan(
                                         text: 'Class: ',
-                                        style: TextStyle(color: kBlack)),
+                                        style:
+                                            TextStyle(color: CResources.black)),
                                     TextSpan(
                                         text: '6',
                                         style: TextStyle(
-                                            color: kRed,
-                                            fontFamily: kOpenSans,
+                                            color: CResources.red,
+                                            fontFamily: Fonts.openSans,
                                             fontWeight: FontWeight.bold))
                                   ])),
                                   SizedBox(
@@ -91,12 +93,13 @@ class ProfilePage extends StatelessWidget {
                                       text: TextSpan(children: [
                                     TextSpan(
                                         text: 'Current Roll no.: ',
-                                        style: TextStyle(color: kBlack)),
+                                        style:
+                                            TextStyle(color: CResources.red)),
                                     TextSpan(
                                         text: '23',
                                         style: TextStyle(
-                                            color: kRed,
-                                            fontFamily: kOpenSans,
+                                            color: CResources.red,
+                                            fontFamily: Fonts.openSans,
                                             fontWeight: FontWeight.bold))
                                   ]))
                                 ],
@@ -150,8 +153,8 @@ class ProfilePage extends StatelessWidget {
                     child: Button(
                       buttonText: 'Log out',
                       onTap: () {},
-                      backGroundColor: kRedAccent.withOpacity(0.7),
-                      buttonTextColor: kWhite,
+                      backGroundColor: CResources.redAccent.withOpacity(0.7),
+                      buttonTextColor: CResources.white,
                     ),
                   )
                 ],
@@ -172,8 +175,8 @@ class Button extends StatelessWidget {
       {Key? key,
       required this.buttonText,
       required this.onTap,
-      this.backGroundColor = kLightGrey,
-      this.buttonTextColor = kBlack})
+      this.backGroundColor = CResources.lightGrey,
+      this.buttonTextColor = CResources.black})
       : super(key: key);
 
   @override
@@ -189,7 +192,7 @@ class Button extends StatelessWidget {
           child: Text(
             buttonText,
             style: TextStyle(
-                fontFamily: kOpenSans,
+                fontFamily: Fonts.openSans,
                 color: buttonTextColor,
                 fontWeight: FontWeight.w500),
           )),
@@ -243,13 +246,13 @@ class _PieChartState extends State<PieChart> {
 
   Color activeColor(persent) {
     if (persent >= 80)
-      return kBlue;
+      return CResources.black;
     else if (persent >= 60)
-      return kGreen;
+      return CResources.green;
     else if (persent >= 40)
-      return kYellow;
+      return CResources.yellow;
     else
-      return kRed;
+      return CResources.red;
   }
 
   @override

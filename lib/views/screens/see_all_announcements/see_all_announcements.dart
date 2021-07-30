@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:madrasah_app/views/constants.dart';
 import 'package:madrasah_app/views/styles/colors.dart';
+import 'package:madrasah_app/views/styles/styles.dart';
 
 class SeeAllAnnouncement extends StatelessWidget {
   const SeeAllAnnouncement({Key? key}) : super(key: key);
@@ -9,27 +10,27 @@ class SeeAllAnnouncement extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: kWhite,
+        backgroundColor: CResources.white,
         elevation: 0.0,
         leading: IconButton(
           onPressed: () {},
           icon: Icon(
             Icons.arrow_back_ios,
-            color: kGrey,
+            color: CResources.grey,
           ),
         ),
         title: Text(
           'Announcements',
-          style: TextStyle(fontFamily: kOpenSans, color: kBlack),
+          style: TextStyle(fontFamily: Fonts.openSans, color: CResources.black),
         ),
         centerTitle: true,
       ),
-      backgroundColor: kWhite,
+      backgroundColor: CResources.white,
       body: Container(
         child: ListView.builder(
           itemBuilder: (context, index) => AnnouncementItem(
             tittle: 'Story of Great prophet Muhammad(SM)',
-            contentText: mohammadSMStory,
+            contentText: Strings.mohammadSMStory,
           ),
           itemCount: 5,
           shrinkWrap: true,
@@ -52,7 +53,7 @@ class AnnouncementItem extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: Card(
-        color: kLightGrey,
+        color: CResources.lightGrey,
         child: Container(
           width: double.infinity,
           constraints: BoxConstraints(maxHeight: 120),
@@ -65,7 +66,7 @@ class AnnouncementItem extends StatelessWidget {
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
-                    fontFamily: kOpenSans),
+                    fontFamily: Fonts.openSans),
               ),
               SizedBox(
                 height: 15,
@@ -75,7 +76,7 @@ class AnnouncementItem extends StatelessWidget {
                   contentText,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 3,
-                  style: TextStyle(fontFamily: kMonserrat),
+                  style: TextStyle(fontFamily: Fonts.monserrat),
                 ),
               )
             ],
