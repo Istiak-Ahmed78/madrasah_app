@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:madrasah_app/views/constants.dart';
 import 'package:madrasah_app/views/styles/styles.dart';
+import '../../../../constants.dart';
 
 class FeedPage extends StatelessWidget {
   const FeedPage({Key? key}) : super(key: key);

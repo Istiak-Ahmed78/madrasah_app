@@ -16,6 +16,7 @@ class NavBarItem {
         icon: Icons.notifications,
         title: 'Notifications',
         screen: NotificationTab()),
-    NavBarItem(icon: Icons.person, title: 'Account', screen: AccountTab())
+    NavBarItem(
+        icon: Icons.person, title: 'Account', screen: AuthSensitiveScreen())
   ];
 }
