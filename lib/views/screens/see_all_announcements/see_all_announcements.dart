@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:madrasah_app/views/constants.dart';
 import 'package:madrasah_app/views/styles/colors.dart';
 import 'package:madrasah_app/views/styles/styles.dart';
+
+import '../../../constants.dart';
 
 class SeeAllAnnouncement extends StatelessWidget {
   const SeeAllAnnouncement({Key? key}) : super(key: key);

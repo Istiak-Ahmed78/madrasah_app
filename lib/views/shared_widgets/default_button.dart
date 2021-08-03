@@ -3,12 +3,12 @@ import 'package:madrasah_app/views/styles/colors.dart';
 
 class DefaultButton extends StatelessWidget {
   final String buttonText;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
   final Color? primaryColor;
   final Color? textColor;
   const DefaultButton(
       {Key? key,
-      required this.onTap,
+      this.onTap,
       required this.buttonText,
       this.primaryColor = CResources.black,
       this.textColor = CResources.white})

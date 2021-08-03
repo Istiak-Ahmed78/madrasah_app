@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:madrasah_app/views/styles/styles.dart';
 
-import '../../../../constants.dart';
+import '../../../../../constants.dart';
 
 class HomeHeading extends StatelessWidget {
   const HomeHeading({Key? key}) : super(key: key);

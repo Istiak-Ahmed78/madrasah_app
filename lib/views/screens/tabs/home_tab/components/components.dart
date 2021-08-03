@@ -1,2 +1,2 @@
 export 'heading.dart';
-export 'news_list.dart';
+export 'notific_list_widget.dart';

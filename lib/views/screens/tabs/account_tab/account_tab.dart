@@ -1,79 +1,20 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:madrasah_app/views/screens/sign_up_screen/sign_up_screen.dart';
-import 'package:madrasah_app/views/shared_widgets/input_field.dart';
-import 'package:madrasah_app/views/shared_widgets/shared_widgets.dart';
-import 'package:madrasah_app/views/styles/colors.dart';
-import 'package:madrasah_app/views/styles/styles.dart';
+import 'package:madrasah_app/state_management/auth_state.dart';
+import 'package:madrasah_app/views/screens/admin_page/admin_page.dart';
+import 'package:madrasah_app/views/screens/profile/logged_in.dart';
+import 'package:provider/provider.dart';
+import 'login_screen/login_screen.dart';
 
-class AccountTab extends StatelessWidget {
-  AccountTab({Key? key}) : super(key: key);
-  final TextEditingController phoneController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+class AuthSensitiveScreen extends StatelessWidget {
+  const AuthSensitiveScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return Scaffold(
-      backgroundColor: CResources.white,
-      body: Center(
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          width: double.infinity,
-          height: size.height - kToolbarHeight,
-          child: Column(
-            children: [
-              Spacer(
-                flex: 2,
-              ),
-              Text('Log in',
-                  style: TextStyle(fontSize: 30, fontFamily: Fonts.openSans)),
-              SizedBox(
-                height: size.height * 0.1,
-              ),
-              InputField(
-                  textEditingController: phoneController,
-                  hintText: 'Your phone number',
-                  textInputType: TextInputType.number,
-                  icon: Icons.phone),
-              SizedBox(
-                height: 20,
-              ),
-              InputField(
-                  textEditingController: passwordController,
-                  hintText: 'Your password',
-                  isPass: true,
-                  icon: Icons.lock),
-              Spacer(),
-              DefaultButton(
-                primaryColor: CResources.black,
-                onTap: () {},
-                buttonText: 'Log In',
-              ),
-              Spacer(),
-              RichText(
-                text: TextSpan(children: [
-                  TextSpan(
-                      text: 'Don\'t have an account? ',
-                      style: TextStyle(color: CResources.black)),
-                  TextSpan(
-                      text: 'Create account',
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => SignUpScreen()));
-                        },
-                      style: TextStyle(
-                          color: CResources.red, fontWeight: FontWeight.bold))
-                ]),
-              ),
-              Spacer()
-            ],
-          ),
-        ),
-      ),
-    );
+    var authSateProvider = Provider.of<AuthState>(context);
+    return authSateProvider.isLoggedIn()
+        ? authSateProvider.isAdmin
+            ? const AdminPage()
+            : const ProfilePage()
+        : LogInScreen();
   }
 }

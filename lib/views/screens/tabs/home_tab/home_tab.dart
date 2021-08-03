@@ -44,7 +44,7 @@ class HomePage extends StatelessWidget {
                     padding: EdgeInsets.all(10),
                   ),
                 ),
-                const NewsListWidget()
+                const NoticeListWidget()
               ],
             ),
           ),

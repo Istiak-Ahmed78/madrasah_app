@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:madrasah_app/views/constants.dart';
+import 'package:madrasah_app/state_management/auth_state.dart';
 import 'package:madrasah_app/views/styles/styles.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:provider/provider.dart';
+import '../../../constants.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -30,8 +32,11 @@ class ProfilePage extends StatelessWidget {
                           shape: BoxShape.circle,
                           color: CResources.teal.withOpacity(0.1),
                           image: DecorationImage(
-                              image: NetworkImage(Strings.mohammadSMStory),
+                              image: NetworkImage(Images.girlProfilePicture),
                               fit: BoxFit.cover),
+                          gradient: RadialGradient(
+                              stops: [0.2, 0.7],
+                              colors: [CResources.black, CResources.orange]),
                           boxShadow: [
                             BoxShadow(
                               color: Colors.grey.withOpacity(0.5),
@@ -42,6 +47,11 @@ class ProfilePage extends StatelessWidget {
                             ),
                           ],
                         ),
+                        // child: Icon(
+                        //   Icons.person,
+                        //   size: 50,
+                        //   color: CResources.blueGrey.withOpacity(0.6),
+                        // ),
                       ),
                       SizedBox(
                         width: 30,
@@ -152,7 +162,10 @@ class ProfilePage extends StatelessWidget {
                     padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
                     child: Button(
                       buttonText: 'Log out',
-                      onTap: () {},
+                      onTap: () async {
+                        await Provider.of<AuthState>(context, listen: false)
+                            .logOut();
+                      },
                       backGroundColor: CResources.redAccent.withOpacity(0.7),
                       buttonTextColor: CResources.white,
                     ),
