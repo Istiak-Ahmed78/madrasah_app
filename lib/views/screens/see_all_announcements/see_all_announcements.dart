@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:madrasah_app/di_contailer.dart';
+import 'package:madrasah_app/utils/firestore_repos/firestore_repos.dart';
 import 'package:madrasah_app/views/styles/colors.dart';
 import 'package:madrasah_app/views/styles/styles.dart';
-
 import '../../../constants.dart';
 
 class SeeAllAnnouncement extends StatelessWidget {
@@ -14,7 +16,9 @@ class SeeAllAnnouncement extends StatelessWidget {
         backgroundColor: CResources.white,
         elevation: 0.0,
         leading: IconButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pop(context);
+          },
           icon: Icon(
             Icons.arrow_back_ios,
             color: CResources.grey,
@@ -28,15 +32,26 @@ class SeeAllAnnouncement extends StatelessWidget {
       ),
       backgroundColor: CResources.white,
       body: Container(
-        child: ListView.builder(
-          itemBuilder: (context, index) => AnnouncementItem(
-            tittle: 'Story of Great prophet Muhammad(SM)',
-            contentText: Strings.mohammadSMStory,
-          ),
-          itemCount: 5,
-          shrinkWrap: true,
-        ),
-      ),
+          child: FutureBuilder(
+        future: services<FirestoreRepos>().getNoticesSnapshot(),
+        builder: (BuildContext context,
+            AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+          if (snapshot.hasData) {
+            return ListView.builder(
+              itemBuilder: (context, index) => AnnouncementItem(
+                tittle: 'Story of Great prophet Muhammad(SM)',
+                contentText: Strings.mohammadSMStory,
+              ),
+              itemCount: 5,
+              shrinkWrap: true,
+            );
+          } else if (snapshot.hasError) {
+            return Text('Something went wrong');
+          } else {
+            return CircularProgressIndicator();
+          }
+        },
+      )),
     );
   }
 }

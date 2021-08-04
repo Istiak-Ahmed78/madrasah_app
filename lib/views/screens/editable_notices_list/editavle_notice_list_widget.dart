@@ -16,7 +16,7 @@ class EditableNoticeList extends StatelessWidget {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: () {
+        onPressed: () async {
           Navigator.pushNamed(context, RouteName.addNewNoticeScreen);
         },
       ),
@@ -32,7 +32,7 @@ class EditableNoticeList extends StatelessWidget {
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         child: StreamBuilder(
-          stream: services<FirestoreRepos>().getNotices(),
+          stream: services<FirestoreRepos>().getNoticesStream(),
           builder: (BuildContext context,
               AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
             if (!snapshot.hasData) {

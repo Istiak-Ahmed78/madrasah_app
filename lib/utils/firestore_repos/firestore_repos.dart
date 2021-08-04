@@ -9,9 +9,12 @@ class FirestoreRepos {
   }
   late FirebaseFirestore firestoreInstance;
 
-  Stream<QuerySnapshot<Map<String, dynamic>>> getNotices() async* {
+  Stream<QuerySnapshot<Map<String, dynamic>>> getNoticesStream() async* {
     yield* firestoreInstance.collection(FirestoreKeys.noticeKey).snapshots();
   }
+
+  Future<QuerySnapshot<Map<String, dynamic>>> getNoticesSnapshot() async =>
+      firestoreInstance.collection(FirestoreKeys.noticeKey).get();
 
   Future<QuerySnapshot<Map<String, dynamic>>> getAdminRecords() async {
     return firestoreInstance.collection(FirestoreKeys.adminKey).get();
