@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:madrasah_app/views/route_management/route_name.dart';
 import 'package:madrasah_app/views/screens/tabs/home_tab/components/components.dart';
 import 'package:madrasah_app/views/styles/styles.dart';
 
@@ -33,7 +34,10 @@ class HomePage extends StatelessWidget {
                                 shape: RoundedRectangleBorder(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(20)))),
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.pushNamed(
+                                  context, RouteName.allAnnouncementScreen);
+                            },
                             child: Text(
                               'See all',
                               style: TextStyle(

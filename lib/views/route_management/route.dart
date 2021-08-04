@@ -15,7 +15,7 @@ class RouteMangement {
         return MaterialPageRoute(builder: (context) => SplashScreen());
       case (RouteName.navBar):
         return MaterialPageRoute(builder: (context) => NavBar());
-      case (RouteName.annouceMentDetails):
+      case (RouteName.allAnnouncementScreen):
         return MaterialPageRoute(builder: (context) => SeeAllAnnouncement());
       case (RouteName.addNewNoticeScreen):
         return MaterialPageRoute(builder: (context) => AddNoticeScreen());
