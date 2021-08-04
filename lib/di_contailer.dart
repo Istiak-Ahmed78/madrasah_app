@@ -16,6 +16,5 @@ void init() {
 
   //Providers
   services.registerLazySingleton(() => AuthState(services()));
-  services.registerLazySingleton(() => FileAttechState());
   services.registerLazySingleton(() => StorageState());
 }

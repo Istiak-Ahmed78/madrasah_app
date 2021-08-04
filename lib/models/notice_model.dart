@@ -1,10 +1,10 @@
 class NoticeModel {
-  final String title, describtion, noticeId;
-  final String? attachmentLink;
+  final String title, noticeId;
+  final String? attachmentLink, describtion;
 
   NoticeModel(
       {required this.title,
-      required this.describtion,
+      this.describtion,
       required this.noticeId,
       this.attachmentLink});
   factory NoticeModel.fromMap(Map<String, dynamic> mapedValue) {
@@ -20,7 +20,7 @@ class NoticeModel {
   static Map<String, dynamic> toMap(NoticeModel noticeModel) {
     return {
       'Title': noticeModel.title,
-      'Describtion': noticeModel.describtion,
+      'Describtion': noticeModel.describtion ?? '',
       'Attachment Link': noticeModel.attachmentLink ?? 'No',
       'NoticeId': noticeModel.noticeId
     };
