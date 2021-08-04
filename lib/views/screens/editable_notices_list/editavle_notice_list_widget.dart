@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:madrasah_app/di_contailer.dart';
 import 'package:madrasah_app/models/notice_model.dart';
+import 'package:madrasah_app/utils/fires_storage_repos.dart';
 import 'package:madrasah_app/utils/firestore_repos/firestore_repos.dart';
 import 'package:madrasah_app/utils/methods.dart';
 import 'package:madrasah_app/views/route_management/route_name.dart';
@@ -12,6 +13,13 @@ class EditableNoticeList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {
+          Navigator.pushNamed(context, RouteName.addNewNoticeScreen);
+        },
+      ),
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
@@ -55,10 +63,12 @@ class NoticeList extends StatelessWidget {
       child: ListView.builder(
         itemBuilder: (context, index) => ListTile(
           title: Text(noticeList[index].title),
-          subtitle: Text(
-            noticeList[index].describtion,
-            overflow: TextOverflow.ellipsis,
-          ),
+          subtitle: noticeList[index].describtion != null
+              ? Text(
+                  noticeList[index].describtion!,
+                  overflow: TextOverflow.ellipsis,
+                )
+              : null,
           trailing: SizedBox(
             width: 96,
             child: Row(
@@ -71,7 +81,12 @@ class NoticeList extends StatelessWidget {
                     },
                     icon: Icon(Icons.edit)),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Methods.showLoadingIndicator(
+                        context: context,
+                        workTodo: deleteANotice(noticeList[index].noticeId,
+                            noticeList[index].attachmentLink));
+                  },
                   icon: Icon(
                     Icons.delete,
                     color: Colors.red,
@@ -80,10 +95,21 @@ class NoticeList extends StatelessWidget {
               ],
             ),
           ),
+          onTap: () {
+            Navigator.pushNamed(context, RouteName.noticeDetailsScreen,
+                arguments: noticeList[index]);
+          },
         ),
         itemCount: noticeList.length,
         shrinkWrap: true,
       ),
     );
+  }
+
+  Future<void> deleteANotice(String noticeId, String? fileUrl) async {
+    await services<FirestoreRepos>().deleteANotice(noticeId);
+    if (fileUrl != null) {
+      await services<StorageRepo>().daleteFile(fileUrl);
+    }
   }
 }

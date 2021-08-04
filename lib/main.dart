@@ -16,7 +16,6 @@ void main() async {
   await FirebaseAppCheck.instance.activate();
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (context) => di.services<AuthState>()),
-    ChangeNotifierProvider(create: (context) => di.services<FileAttechState>()),
     ChangeNotifierProvider(create: (constex) => di.services<StorageState>())
   ], child: MyApp()));
 }

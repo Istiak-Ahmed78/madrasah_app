@@ -1,7 +1,12 @@
+import 'dart:ffi';
 import 'dart:io';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:madrasah_app/state_management/file_attach_state.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:madrasah_app/di_contailer.dart';
+import 'package:madrasah_app/models/notice_model.dart';
 import 'package:madrasah_app/state_management/storage_state.dart';
+import 'package:madrasah_app/utils/firestore_repos/firestore_repos.dart';
 import 'package:madrasah_app/utils/form_validation.dart';
 import 'package:madrasah_app/utils/methods.dart';
 import 'package:madrasah_app/views/shared_widgets/input_field.dart';
@@ -22,33 +27,32 @@ class _AddNoticeScreenState extends State<AddNoticeScreen> {
   final TextEditingController decribtionController = TextEditingController();
 
   final fromKey = GlobalKey<FormState>();
-
+  File? selectedFile;
   final border = OutlineInputBorder(
       borderSide: BorderSide.none,
       borderRadius: BorderRadius.all(Radius.circular(10)));
 
-  @override
-  void initState() {
-    super.initState();
-    Future.delayed(Duration.zero, () {
-      Provider.of<StorageState>(context, listen: false).gotoInitial();
-      Provider.of<FileAttechState>(context, listen: false).clearLisr();
-    });
+  void pickFile() async {
+    FilePickerResult? result = await FilePicker.platform
+        .pickFiles(type: FileType.custom, allowedExtensions: ['pdf']);
+    if (result != null && result.files.single.size < 10000000) {
+      selectedFile = File(result.files.single.path!);
+      setState(() {});
+    } else {
+      Methods.showToast(
+          toastMessage: 'File size is too large.', duration: Toast.LENGTH_LONG);
+    }
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-    Provider.of<StorageState>(context, listen: false).gotoInitial();
-    Provider.of<FileAttechState>(context, listen: false).clearLisr();
+  void removeFile() {
+    selectedFile = null;
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
     var storageProvider = Provider.of<StorageState>(context);
-    var storageProviderMuted =
-        Provider.of<StorageState>(context, listen: false);
-    var attachFileState = Provider.of<FileAttechState>(context, listen: false);
+
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -90,62 +94,62 @@ class _AddNoticeScreenState extends State<AddNoticeScreen> {
                         filled: true),
                   ),
                   GestureDetector(
-                    onTap: Provider.of<FileAttechState>(context)
-                            .attachedFiles
-                            .isEmpty
+                    onTap: selectedFile == null
                         ? () async {
-                            Provider.of<FileAttechState>(context, listen: false)
-                                .pickFiels();
+                            pickFile();
                           }
                         : null,
                     child: Container(
                       margin: EdgeInsets.symmetric(vertical: 30),
                       height: size(context).height * 0.3,
                       width: double.infinity,
-                      child: Provider.of<FileAttechState>(context)
-                              .attachedFiles
-                              .isEmpty
+                      child: selectedFile == null
                           ? Center(
                               child: Text(
                               'Click here to attach some files',
                               style: TextStyle(fontFamily: Fonts.monserrat),
                             ))
                           : AttachedFileList(
-                              attachedFile: Provider.of<FileAttechState>(
-                                      context,
-                                      listen: false)
-                                  .attachedFiles,
+                              attachedFile: selectedFile!,
+                              onPressed: removeFile,
                             ),
                       decoration: BoxDecoration(
                           color: CResources.grey.withOpacity(0.2),
                           borderRadius: BorderRadius.all(Radius.circular(10))),
                     ),
                   ),
-                  storageProvider.upLoadPersent != 100.0 &&
-                          storageProvider.isLoading
+                  // storageProvider.upLoadPersent != 100.0 &&
+                  storageProvider.isLoading
                       ? Text(
                           'Uploading ${storageProvider.upLoadPersent}%, don\'t close the window')
                       : Container(),
-                  Button(
-                    buttonText: storageProvider.isDone ||
-                            attachFileState.attachedFiles.isEmpty
-                        ? 'Post the notice'
-                        : 'Upload assets',
-                    onPressed: storageProvider.isLoading
-                        ? null
-                        : storageProvider.isDone ||
-                                attachFileState.attachedFiles.isEmpty
-                            ? () {}
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Button(
+                          onPressed: () {
+                            clearAllData();
+                            Navigator.pop(context);
+                          },
+                          buttonText: 'Back'),
+                      Button(
+                        buttonText: 'Post the notice',
+                        onPressed: storageProvider.isLoading
+                            ? null
                             : () {
                                 if (fromKey.currentState!.validate()) {
                                   print('Form is valid');
-                                  if (attachFileState
-                                      .attachedFiles.isNotEmpty) {
-                                    storageProviderMuted.uploadMultipleFile(
-                                        attachFileState.attachedFiles);
+                                  if (selectedFile != null) {
+                                    Methods.showUploadLoading(
+                                        context: context,
+                                        workTodo: postTheNotice(selectedFile!));
+                                    // storageProviderMuted.uploadMultipleFile(
+                                    //     attachFileState.attachedFiles);
                                   }
                                 }
                               },
+                      ),
+                    ],
                   )
                 ],
               ),
@@ -154,6 +158,26 @@ class _AddNoticeScreenState extends State<AddNoticeScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> postTheNotice(File fileToUpload) async {
+    String noticeId = DateTime.now().toString();
+    var storageProvider = Provider.of<StorageState>(context, listen: false);
+    await storageProvider.uploadFile(
+        fileToUpload: selectedFile!, fileName: noticeId);
+    NoticeModel noticeModel = NoticeModel(
+        title: titleController.text,
+        describtion: decribtionController.text,
+        noticeId: noticeId,
+        attachmentLink: storageProvider.imageUrlLink);
+    clearAllData();
+    await services<FirestoreRepos>().addANotice(noticeModel);
+  }
+
+  void clearAllData() {
+    titleController.clear();
+    decribtionController.clear();
+    removeFile();
   }
 }
 
@@ -167,17 +191,14 @@ class Button extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(top: 30),
-      child: Align(
-        alignment: Alignment.bottomRight,
-        child: MaterialButton(
-          onPressed: onPressed,
-          color: CResources.blue,
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(10))),
-          child: Text(
-            buttonText,
-            style: TextStyle(color: CResources.white),
-          ),
+      child: MaterialButton(
+        onPressed: onPressed,
+        color: CResources.blue,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(10))),
+        child: Text(
+          buttonText,
+          style: TextStyle(color: CResources.white),
         ),
       ),
     );
@@ -185,62 +206,21 @@ class Button extends StatelessWidget {
 }
 
 class AttachedFileList extends StatelessWidget {
-  final List<File> attachedFile;
-  const AttachedFileList({Key? key, required this.attachedFile})
+  final File attachedFile;
+  final void Function()? onPressed;
+  const AttachedFileList(
+      {Key? key, required this.attachedFile, required this.onPressed})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            child: ListView.builder(
-                itemCount: attachedFile.length,
-                // shrinkWrap: true,
-                itemBuilder: (context, index) => ListTile(
-                      title: Text(
-                        attachedFile[index].path.split('/').last,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      trailing: IconButton(
-                        onPressed: () {
-                          Provider.of<FileAttechState>(context, listen: false)
-                              .removeAItem(index);
-                        },
-                        icon: Icon(
-                          Icons.close,
-                          color: CResources.red,
-                        ),
-                      ),
-                    )),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: MaterialButton(
-              height: 30,
-              minWidth: double.infinity,
-              color: CResources.grey,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10))),
-              onPressed: Provider.of<StorageState>(context).isLoading
-                  ? null
-                  : () {
-                      Provider.of<FileAttechState>(context, listen: false)
-                          .pickFiels();
-                    },
-              child: Text(
-                'Add more',
-                style: TextStyle(color: CResources.white),
-              ),
-            ),
-          ),
-          Align(
-            alignment: Alignment.bottomCenter,
-          )
-        ],
+    return Center(
+        child: ListTile(
+      title: Text(attachedFile.path),
+      trailing: IconButton(
+        onPressed: onPressed,
+        icon: Icon(Icons.delete),
       ),
-    );
+    ));
   }
 }

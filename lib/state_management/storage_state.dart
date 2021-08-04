@@ -13,6 +13,7 @@ class StorageState extends ChangeNotifier {
   bool isLoadingLocal = false;
   var uploadFileNumberLocal = 0;
   String errorMessageLocal = FirebaseErrorMessages.defaultErrorMessage;
+  String? imageUrlLink;
 
   double get upLoadPersent => uploadPersentValue;
   bool get isLoading => isLoadingLocal;
@@ -20,28 +21,22 @@ class StorageState extends ChangeNotifier {
   String get storageUploadErrorMessage => errorMessageLocal;
   get uploadNumber => uploadFileNumberLocal;
 
-  Future<void> uploadFiles(
-      {required String filename, required File fileToUpload}) async {
-    notifyListeners();
+  Future<void> uploadFile(
+      {required File fileToUpload, required String fileName}) async {
     UploadTask uploadTask =
-        services<StorageRepo>().uploadImage(filename, fileToUpload);
+        services<StorageRepo>().uploadImage(fileName, fileToUpload);
     try {
-      uploadTask.snapshotEvents.listen((event) {
-        uploadPersentValue =
-            ((event.bytesTransferred / event.totalBytes) * 100).roundToDouble();
-        notifyListeners();
-      }).onDone(() {
-        isLoadingLocal = false;
-        notifyListeners();
-      });
+      var df = await uploadTask;
+      String d = await df.ref.getDownloadURL();
+      print(d);
+      imageUrlLink = d;
+      notifyListeners();
     } on FirebaseException catch (error) {
       if (error.code == 'permission-denied') {
-        isLoadingLocal = false;
         errorMessageLocal =
             error.message ?? FirebaseErrorMessages.defaultErrorMessage;
         notifyListeners();
       } else {
-        isLoadingLocal = false;
         errorMessageLocal = error.code;
         notifyListeners();
       }
@@ -53,21 +48,6 @@ class StorageState extends ChangeNotifier {
     isDoneLocal = false;
     isLoadingLocal = false;
     uploadPersentValue = 0.0;
-    notifyListeners();
-  }
-
-  Future<void> uploadMultipleFile(List<File> fileList) async {
-    String fileName = DateTime.now().toString();
-    isLoadingLocal = true;
-    isDoneLocal = false;
-    notifyListeners();
-    for (final i in fileList) {
-      uploadFileNumberLocal = fileList.indexOf(i) + 1;
-      notifyListeners();
-      uploadFiles(filename: fileName, fileToUpload: i);
-    }
-
-    isDoneLocal = true;
     notifyListeners();
   }
 }

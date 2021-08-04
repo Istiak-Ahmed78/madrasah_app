@@ -38,6 +38,7 @@ dependencies:
   percent_indicator: ^3.0.1
   provider: ^5.0.0
   syncfusion_flutter_pdfviewer: ^19.1.69-beta
+  url_launcher: ^6.0.9
 
 dev_dependencies:
   flutter_test:

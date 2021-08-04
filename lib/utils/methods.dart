@@ -6,9 +6,8 @@ import 'package:madrasah_app/models/notice_model.dart';
 import 'package:madrasah_app/state_management/auth_state.dart';
 import 'package:madrasah_app/views/shared_widgets/shared_widgets.dart';
 import 'package:madrasah_app/views/styles/colors.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:provider/provider.dart';
-import 'dart:io';
+import 'package:url_launcher/url_launcher.dart';
 
 class Methods {
   static void showToast(
@@ -93,26 +92,22 @@ class Methods {
   }
 
   static Future<void> showUploadLoading(
-      {required BuildContext context,
-      required double persent,
-      required bool isDone,
-      void workTodo}) async {
+      {required BuildContext context, required Future<void> workTodo}) async {
     showDialog(
       context: context,
       barrierDismissible: true,
       builder: (BuildContext context) {
         return AlertDialog(
-          shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(8.0))),
-          backgroundColor: Colors.black87,
-          content:
-              LoadingIndicator(text: getUploadNoticeSring(isDone, persent)),
-        );
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(8.0))),
+            backgroundColor: Colors.black87,
+            content: LoadingIndicator(
+              text: 'Posting the notice',
+            ));
       },
     );
-    if (isDone) {
-      Navigator.pop(context);
-    }
+    await workTodo;
+    Navigator.pop(context);
   }
 
   static List<NoticeModel> decodeNoticeModel(
@@ -128,17 +123,6 @@ class Methods {
     }
   }
 
-  static Future<List<File>?> pickFils() async {
-    FilePickerResult? result =
-        await FilePicker.platform.pickFiles(allowMultiple: true);
-    List<File> files;
-    if (result != null) {
-      files = result.paths.map((path) => File(path!)).toList();
-      return files;
-    } else
-      return null;
-  }
-
   static String getUploadNoticeSring(
     bool isDone,
     double loadingProgressStatus,
@@ -147,5 +131,13 @@ class Methods {
       return 'Uploading $loadingProgressStatus';
     } else
       return 'Done uploading';
+  }
+
+  static launchUrl(String urlToLauch) async {
+    if (await canLaunch(urlToLauch)) {
+      launch(urlToLauch);
+    } else {
+      Methods.showToast(toastMessage: 'Couldnot launch');
+    }
   }
 }

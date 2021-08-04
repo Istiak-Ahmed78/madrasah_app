@@ -40,7 +40,7 @@ class NoticeListWidget extends StatelessWidget {
                     constraints: BoxConstraints(maxHeight: 40, minHeight: 20),
                     child: ListItem(
                       title: dataList[index].title,
-                      // isNew: true,
+                      isNew: isNew(dataList[index].noticeId),
                     ),
                   ),
                 );
@@ -53,6 +53,11 @@ class NoticeListWidget extends StatelessWidget {
           },
         ));
   }
+
+  bool isNew(String noticeId) {
+    DateTime id = DateTime.parse(noticeId);
+    return id.difference(DateTime.now()) < Duration(days: 1);
+  }
 }
 
 class ListItem extends StatelessWidget {
@@ -64,6 +69,10 @@ class ListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: CResources.grey.withOpacity(0.2),
+      height: 35,
+      padding: EdgeInsets.symmetric(horizontal: 10),
+      margin: EdgeInsets.symmetric(vertical: 5),
       child: Row(
         children: [
           Padding(
