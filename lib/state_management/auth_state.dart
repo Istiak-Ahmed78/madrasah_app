@@ -10,15 +10,16 @@ class AuthState extends ChangeNotifier {
   final AuthRepos authRepos;
   AuthState(this.authRepos);
 
-  User? currentUser;
+  User? currentUserLocal;
   String firebaseLocalErrorMessage = '';
   bool isLoadingLocal = false;
   bool isAdminLocal = false;
 
-  User? get currentuser => currentUser;
+  User? get currentuser => currentUserLocal;
   String get firebaseErrorMessgase => firebaseLocalErrorMessage;
   bool get isLoading => isLoadingLocal;
   bool get isAdmin => isAdminLocal;
+  User? get getCurrentUser => authRepos.getCurrentUser();
 
   Future<bool> logInwithEmailAndPassword(String email, String password) async {
     isLoadingLocal = true;
@@ -27,8 +28,8 @@ class AuthState extends ChangeNotifier {
     AuthResponce authRespoce =
         await authRepos.logInWithEmailAndPassword(email, password);
     if (authRespoce.userCredential != null) {
-      currentUser = authRespoce.userCredential!.user;
-      if (await getAdminStatus(currentUser!.email)) {
+      currentUserLocal = authRespoce.userCredential!.user;
+      if (await getAdminStatus(currentUserLocal!.email)) {
         isAdminLocal = true;
       }
       isLoadingLocal = false;
@@ -82,7 +83,7 @@ class AuthState extends ChangeNotifier {
     notifyListeners();
     AuthResponce authRespoce = await authRepos.createNewUser(email, password);
     if (authRespoce.userCredential != null) {
-      currentUser = authRespoce.userCredential!.user;
+      currentUserLocal = authRespoce.userCredential!.user;
       isLoadingLocal = false;
       notifyListeners();
       return true;
@@ -100,7 +101,7 @@ class AuthState extends ChangeNotifier {
     notifyListeners();
     AuthResponce _authRespoce = await authRepos.signInWithGooglleAccount();
     if (_authRespoce.userCredential != null) {
-      currentUser = _authRespoce.userCredential!.user;
+      currentUserLocal = _authRespoce.userCredential!.user;
       isLoadingLocal = false;
       notifyListeners();
     } else {
@@ -115,7 +116,7 @@ class AuthState extends ChangeNotifier {
     notifyListeners();
     AuthResponce _authRespoce = await authRepos.signInWithFacebook();
     if (_authRespoce.userCredential != null) {
-      currentUser = _authRespoce.userCredential!.user;
+      currentUserLocal = _authRespoce.userCredential!.user;
       isLoadingLocal = false;
       notifyListeners();
     } else {
@@ -128,7 +129,7 @@ class AuthState extends ChangeNotifier {
 
   Future<void> logOut() async {
     await authRepos.logout();
-    currentUser = null;
+    currentUserLocal = null;
     notifyListeners();
   }
 }

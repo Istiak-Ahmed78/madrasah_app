@@ -25,20 +25,31 @@ class NoticeListWidget extends StatelessWidget {
           builder: (context,
               AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
             if (!snapshot.hasData) {
-              return CircularProgressIndicator();
+              return Center(
+                  child: Text(
+                'Loading',
+                style: TextStyle(fontFamily: Fonts.openSans),
+              ));
             } else if (snapshot.hasData) {
               if (snapshot.data == null) {
                 return Text('Null result');
               } else if (snapshot.data!.docs.isEmpty) {
-                return Text('No item to show');
+                return Center(
+                    child: Text(
+                  'No item to show',
+                  style: TextStyle(
+                      color: CResources.blueAccent,
+                      fontFamily: Fonts.monserrat),
+                ));
               } else if (snapshot.data!.docs.isNotEmpty) {
                 var dataList = Methods.decodeNoticeModel(snapshot.data!);
                 return ListView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
+                  // physics: const NeverScrollableScrollPhysics(),
                   itemCount: dataList.length,
+
                   itemBuilder: (context, index) => Container(
                     width: double.infinity,
-                    margin: EdgeInsets.symmetric(vertical: 10),
+                    margin: EdgeInsets.symmetric(vertical: 5),
                     constraints: BoxConstraints(maxHeight: 40, minHeight: 20),
                     child: ListItem(
                       noticeModel: dataList[index],

@@ -1,6 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_sslcommerz/model/SSLCSdkType.dart';
+import 'package:flutter_sslcommerz/model/SSLCommerzInitialization.dart';
+import 'package:flutter_sslcommerz/model/SSLCurrencyType.dart';
+import 'package:flutter_sslcommerz/sslcommerz.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:madrasah_app/models/notice_model.dart';
 import 'package:madrasah_app/state_management/auth_state.dart';
@@ -8,6 +12,7 @@ import 'package:madrasah_app/views/shared_widgets/shared_widgets.dart';
 import 'package:madrasah_app/views/styles/colors.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_sslcommerz/flutter_sslcommerz.dart';
 
 class Methods {
   static void showToast(
@@ -139,5 +144,20 @@ class Methods {
     } else {
       Methods.showToast(toastMessage: 'Couldnot launch');
     }
+  }
+
+  static void pay() {
+    Sslcommerz sslcommerz = Sslcommerz(
+        initializer: SSLCommerzInitialization(
+            //   ipn_url: "www.ipnurl.com",
+            multi_card_name: "visa,master,bkash",
+            currency: SSLCurrencyType.BDT,
+            product_category: "Food",
+            sdkType: SSLCSdkType.TESTBOX,
+            store_id: "ghost611797ae8b447",
+            store_passwd: "ghost611797ae8b447@ssl",
+            total_amount: 10.0,
+            tran_id: "1231321321321312"));
+    sslcommerz.payNow();
   }
 }

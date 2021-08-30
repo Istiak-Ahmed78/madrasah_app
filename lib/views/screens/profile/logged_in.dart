@@ -47,11 +47,6 @@ class ProfilePage extends StatelessWidget {
                             ),
                           ],
                         ),
-                        // child: Icon(
-                        //   Icons.person,
-                        //   size: 50,
-                        //   color: CResources.blueGrey.withOpacity(0.6),
-                        // ),
                       ),
                       SizedBox(
                         width: 30,
@@ -155,7 +150,7 @@ class ProfilePage extends StatelessWidget {
                   Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: Button(
-                        buttonText: 'Edit your profile',
+                        buttonText: 'Appy for editing your information',
                         onTap: () {},
                       )),
                   Padding(
@@ -196,7 +191,7 @@ class Button extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      height: 60,
+      height: 40,
       child: MaterialButton(
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(20))),

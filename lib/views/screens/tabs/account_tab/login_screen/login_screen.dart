@@ -17,18 +17,18 @@ class LogInScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size _size = MediaQuery.of(context).size;
+    final authProvider = Provider.of<AuthState>(context);
     return Scaffold(
       backgroundColor: CResources.white,
-      body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          width: double.infinity,
-          height: _size.height - kToolbarHeight,
+      body: Container(
+        padding:
+            EdgeInsets.symmetric(horizontal: 20, vertical: kTextTabBarHeight),
+        width: double.infinity,
+        height: _size.height,
+        child: SingleChildScrollView(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Spacer(
-                flex: 2,
-              ),
               Container(
                 height: _size.height * 0.3,
                 width: _size.width * 0.6,
@@ -41,6 +41,7 @@ class LogInScreen extends StatelessWidget {
               Form(
                   key: logInKey,
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       InputField(
                           textEditingController: emailController,
@@ -59,11 +60,18 @@ class LogInScreen extends StatelessWidget {
                           icon: Icons.lock),
                     ],
                   )),
-              Spacer(),
-              Provider.of<AuthState>(context).firebaseErrorMessgase == ''
+              SizedBox(
+                height: 10,
+              ),
+              authProvider.firebaseErrorMessgase == ''
                   ? Container()
-                  : Text('Eorror'),
-              Spacer(),
+                  : Text(
+                      authProvider.firebaseErrorMessgase,
+                      style: TextStyle(color: CResources.red),
+                    ),
+              SizedBox(
+                height: _size.height * 0.1,
+              ),
               DefaultButton(
                 primaryColor: CResources.black,
                 onTap: Provider.of<AuthState>(context).isLoading
@@ -75,9 +83,6 @@ class LogInScreen extends StatelessWidget {
                         }
                       },
                 buttonText: 'Log In',
-              ),
-              Spacer(
-                flex: 5,
               ),
             ],
           ),

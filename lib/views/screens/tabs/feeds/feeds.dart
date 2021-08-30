@@ -46,7 +46,7 @@ class FeedItem extends StatelessWidget {
             Row(
               children: [
                 CircleAvatar(
-                  backgroundImage: NetworkImage(Strings.dummyDescribtion),
+                  backgroundImage: NetworkImage(Images.girlProfilePicture),
                 ),
                 SizedBox(
                   width: 10,

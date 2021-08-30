@@ -22,6 +22,10 @@ class Images {
   static const madrashaLogo = 'assets/images/madrasah.png';
   static const reading = 'assets/images/studing.png';
   static const readingGirl = 'assets/images/reading_girl.png';
+  static const somthingWentWrong = 'assets/images/error.png';
+  static const emtyListImage = 'assets/images/emty_list.png';
+  static const bookImage = 'assets/images/book2.png';
+  static const classroomIcon = 'assets/images/classroom_icon.png';
 
   //Network
   static const nayagraWaterFall =
