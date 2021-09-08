@@ -12,7 +12,6 @@ import 'package:madrasah_app/views/shared_widgets/shared_widgets.dart';
 import 'package:madrasah_app/views/styles/colors.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:flutter_sslcommerz/flutter_sslcommerz.dart';
 
 class Methods {
   static void showToast(

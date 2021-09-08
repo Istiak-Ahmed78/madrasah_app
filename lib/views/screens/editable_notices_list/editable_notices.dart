@@ -11,12 +11,15 @@ import 'package:madrasah_app/views/screens/something_went_wrong/something_went_w
 import 'package:madrasah_app/views/styles/colors.dart';
 import 'package:madrasah_app/views/styles/fonts.dart';
 
+final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
 class EditableNoticeList extends StatelessWidget {
   const EditableNoticeList({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
@@ -105,7 +108,7 @@ class NoticeList extends StatelessWidget {
                 IconButton(
                   onPressed: () async {
                     Methods.showLoadingIndicator(
-                        context: context,
+                        context: _scaffoldKey.currentState!.context,
                         workTodo: deleteANotice(noticeList[index].noticeId,
                             noticeList[index].attachmentLink));
                   },

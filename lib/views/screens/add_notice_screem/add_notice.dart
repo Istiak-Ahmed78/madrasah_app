@@ -192,7 +192,7 @@ class _AddNoticeScreenState extends State<AddNoticeScreen> {
     NoticeModel noticeModel = NoticeModel(
         title: titleController.text,
         describtion: decribtionController.text,
-        noticeId: noticeId,
+        noticeId: isEdit ? widget.noticeModel!.noticeId : noticeId,
         attachmentLink: storageProvider.imageUrlLink ?? 'No');
     if (isEdit) {
       print(noticeModel.noticeId);
