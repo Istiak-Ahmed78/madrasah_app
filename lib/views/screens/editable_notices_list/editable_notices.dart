@@ -107,10 +107,16 @@ class NoticeList extends StatelessWidget {
                     icon: Icon(Icons.edit)),
                 IconButton(
                   onPressed: () async {
-                    Methods.showLoadingIndicator(
-                        context: _scaffoldKey.currentState!.context,
-                        workTodo: deleteANotice(noticeList[index].noticeId,
-                            noticeList[index].attachmentLink));
+                    Methods.deleteConfirmationPopUp(
+                        noticeTitle: noticeList[index].title.substring(0, 12),
+                        context: context,
+                        onDelelte: () async {
+                          await Methods.showLoadingIndicator(
+                              context: _scaffoldKey.currentState!.context,
+                              workTodo: deleteANotice(
+                                  noticeList[index].noticeId,
+                                  noticeList[index].attachmentLink));
+                        });
                   },
                   icon: Icon(
                     Icons.delete,

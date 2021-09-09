@@ -1,10 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_sslcommerz/model/SSLCSdkType.dart';
-import 'package:flutter_sslcommerz/model/SSLCommerzInitialization.dart';
-import 'package:flutter_sslcommerz/model/SSLCurrencyType.dart';
-import 'package:flutter_sslcommerz/sslcommerz.dart';
+
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:madrasah_app/models/notice_model.dart';
 import 'package:madrasah_app/state_management/auth_state.dart';
@@ -29,45 +26,88 @@ class Methods {
   }
 
   static void emtyEmailWarning(context) {
-    showDialog(
+    displayADialog(
         context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-              content: const Text(
-                  "To procceed, enter your valid email adress in the email field."),
-              actions: [
-                TextButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: const Text('Ok')),
-              ]);
-        });
+        content: const Text(
+            "To procceed, enter your valid email adress in the email field."),
+        actions: [
+          TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('Ok')),
+        ]);
   }
 
   static void showVerificationAskingDialog(context, user) {
-    showDialog(
+    displayADialog(
         context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-              title: const Text("Your email adress need verification"),
-              content: const Text(
-                  "Your email is not verified.You cannot logIn without verifing your email adress."),
-              actions: [
-                TextButton(
-                    onPressed: () async {
-                      await Provider.of<AuthState>(context, listen: false)
-                          .sendVerificationEmail(user);
-                      Navigator.pop(context);
-                    },
-                    child: const Text('Send verification email again')),
-                TextButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: const Text('Ok')),
-              ]);
-        });
+        content: const Text(
+            "Your email is not verified.You cannot logIn without verifing your email adress."),
+        title: const Text("Your email adress need verification"),
+        actions: [
+          TextButton(
+              onPressed: () async {
+                await Provider.of<AuthState>(context, listen: false)
+                    .sendVerificationEmail(user);
+                Navigator.pop(context);
+              },
+              child: const Text('Send verification email again')),
+          TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('Ok')),
+        ]);
+    // showDialog(
+    //     context: context,
+    //     builder: (BuildContext context) {
+    //       return AlertDialog(
+    //           title: const Text("Your email adress need verification"),
+    //           content: const Text(
+    //               "Your email is not verified.You cannot logIn without verifing your email adress."),
+    //           actions: [
+    //             TextButton(
+    //                 onPressed: () async {
+    //                   await Provider.of<AuthState>(context, listen: false)
+    //                       .sendVerificationEmail(user);
+    //                   Navigator.pop(context);
+    //                 },
+    //                 child: const Text('Send verification email again')),
+    //             TextButton(
+    //                 onPressed: () {
+    //                   Navigator.pop(context);
+    //                 },
+    //                 child: const Text('Ok')),
+    //           ]);
+    //     });
+  }
+
+  static void deleteConfirmationPopUp(
+      {required BuildContext context,
+      String noticeTitle = '',
+      required Function onDelelte}) {
+    return displayADialog(
+        context: context,
+        title: Text('Want to delete?'),
+        content: Text('Are you sure about deleting \'$noticeTitle..\'?'),
+        actions: [
+          TextButton(
+            onPressed: () async {
+              Navigator.pop(context);
+              onDelelte();
+            },
+            // onPressed: () {
+            //   print('delete');
+            // },
+            child: Text('Yes, delete'),
+          ),
+          TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text('No, cancel'))
+        ]);
   }
 
   static Future<void> showLoadingIndicator(
@@ -145,18 +185,36 @@ class Methods {
     }
   }
 
-  static void pay() {
-    Sslcommerz sslcommerz = Sslcommerz(
-        initializer: SSLCommerzInitialization(
-            //   ipn_url: "www.ipnurl.com",
-            multi_card_name: "visa,master,bkash",
-            currency: SSLCurrencyType.BDT,
-            product_category: "Food",
-            sdkType: SSLCSdkType.TESTBOX,
-            store_id: "ghost611797ae8b447",
-            store_passwd: "ghost611797ae8b447@ssl",
-            total_amount: 10.0,
-            tran_id: "1231321321321312"));
-    sslcommerz.payNow();
+  static void displayADialog(
+      {required BuildContext context,
+      Widget? content,
+      Widget? title,
+      List<Widget>? actions,
+      bool isDissmissable = false}) {
+    showDialog(
+        context: context,
+        barrierDismissible: isDissmissable,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: title,
+            actions: actions,
+            content: content,
+          );
+        });
   }
+
+  // static void pay() {
+  //   Sslcommerz sslcommerz = Sslcommerz(
+  //       initializer: SSLCommerzInitialization(
+  //           //   ipn_url: "www.ipnurl.com",
+  //           multi_card_name: "visa,master,bkash",
+  //           currency: SSLCurrencyType.BDT,
+  //           product_category: "Food",
+  //           sdkType: SSLCSdkType.TESTBOX,
+  //           store_id: "ghost611797ae8b447",
+  //           store_passwd: "ghost611797ae8b447@ssl",
+  //           total_amount: 10.0,
+  //           tran_id: "1231321321321312"));
+  //   sslcommerz.payNow();
+  // }
 }
