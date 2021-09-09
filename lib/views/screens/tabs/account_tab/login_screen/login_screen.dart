@@ -21,8 +21,9 @@ class LogInScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: CResources.white,
       body: Container(
-        padding:
-            EdgeInsets.symmetric(horizontal: 20, vertical: kTextTabBarHeight),
+        padding: EdgeInsets.symmetric(
+          horizontal: 20,
+        ),
         width: double.infinity,
         height: _size.height,
         child: SingleChildScrollView(

@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:madrasah_app/models/notice_model.dart';
 import 'package:madrasah_app/state_management/auth_state.dart';
@@ -59,28 +58,6 @@ class Methods {
               },
               child: const Text('Ok')),
         ]);
-    // showDialog(
-    //     context: context,
-    //     builder: (BuildContext context) {
-    //       return AlertDialog(
-    //           title: const Text("Your email adress need verification"),
-    //           content: const Text(
-    //               "Your email is not verified.You cannot logIn without verifing your email adress."),
-    //           actions: [
-    //             TextButton(
-    //                 onPressed: () async {
-    //                   await Provider.of<AuthState>(context, listen: false)
-    //                       .sendVerificationEmail(user);
-    //                   Navigator.pop(context);
-    //                 },
-    //                 child: const Text('Send verification email again')),
-    //             TextButton(
-    //                 onPressed: () {
-    //                   Navigator.pop(context);
-    //                 },
-    //                 child: const Text('Ok')),
-    //           ]);
-    //     });
   }
 
   static void deleteConfirmationPopUp(

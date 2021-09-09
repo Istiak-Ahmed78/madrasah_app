@@ -4,6 +4,7 @@ import 'package:madrasah_app/utils/methods.dart';
 import 'package:madrasah_app/views/styles/colors.dart';
 import 'package:madrasah_app/views/styles/dimentions.dart';
 import 'package:madrasah_app/views/styles/styles.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class NoticeDetails extends StatelessWidget {
   final NoticeModel noticeModel;
@@ -34,6 +35,13 @@ class NoticeDetails extends StatelessWidget {
                       fontSize: Dimensions.mediuim,
                       color: CResources.blueGrey,
                       fontFamily: Fonts.openSans),
+                ),
+                SizedBox(
+                  height: Dimensions.mediuim,
+                ),
+                Text(
+                  timeago.format(DateTime.parse(noticeModel.noticeId)),
+                  style: TextStyle(color: CResources.orangeAccent),
                 ),
                 SizedBox(
                   height: Dimensions.learge,

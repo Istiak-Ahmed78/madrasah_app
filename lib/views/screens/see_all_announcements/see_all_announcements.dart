@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:madrasah_app/di_contailer.dart';
 import 'package:madrasah_app/models/notice_model.dart';
 import 'package:madrasah_app/utils/firestore_repos/firestore_repos.dart';
@@ -9,6 +8,8 @@ import 'package:madrasah_app/views/screens/emty_list_screen/emty_list_screen.dar
 import 'package:madrasah_app/views/screens/something_went_wrong/something_went_wrong.dart';
 import 'package:madrasah_app/views/styles/colors.dart';
 import 'package:madrasah_app/views/styles/styles.dart';
+import 'package:flutter/material.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class SeeAllAnnouncement extends StatelessWidget {
   const SeeAllAnnouncement({Key? key}) : super(key: key);
@@ -50,7 +51,6 @@ class SeeAllAnnouncement extends StatelessWidget {
                 itemCount: _data.length,
                 shrinkWrap: true,
               );
-              ;
             } else {
               return EmtyListScreen();
             }
@@ -102,11 +102,17 @@ class AnnouncementItem extends StatelessWidget {
                 Expanded(
                   child: Text(
                     noticeModel.describtion ??
-                        'This notice dont have describtion',
+                        'This notice don\'t have describtion',
                     overflow: TextOverflow.ellipsis,
                     maxLines: 3,
-                    style: TextStyle(fontFamily: Fonts.monserrat),
+                    style: TextStyle(
+                        fontFamily: Fonts.monserrat, color: CResources.red),
                   ),
+                ),
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: Text(
+                      timeago.format(DateTime.parse(noticeModel.noticeId))),
                 )
               ],
             ),

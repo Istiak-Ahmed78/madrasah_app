@@ -44,9 +44,7 @@ class NoticeListWidget extends StatelessWidget {
               } else if (snapshot.data!.docs.isNotEmpty) {
                 var dataList = Methods.decodeNoticeModel(snapshot.data!);
                 return ListView.builder(
-                  // physics: const NeverScrollableScrollPhysics(),
                   itemCount: dataList.length,
-
                   itemBuilder: (context, index) => Container(
                     width: double.infinity,
                     margin: EdgeInsets.symmetric(vertical: 5),
@@ -100,7 +98,7 @@ class ListItem extends StatelessWidget {
               child: Text(
                 noticeModel.title,
                 overflow: TextOverflow.ellipsis,
-                style: TextStyle(),
+                style: TextStyle(fontFamily: Fonts.openSans),
               ),
             ),
           ],
@@ -111,6 +109,6 @@ class ListItem extends StatelessWidget {
 
   bool isNew(String noticeId) {
     DateTime id = DateTime.parse(noticeId);
-    return id.difference(DateTime.now()) < Duration(days: 1);
+    return DateTime.now().difference(id) < Duration(hours: 5);
   }
 }
