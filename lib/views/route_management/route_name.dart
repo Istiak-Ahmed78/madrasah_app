@@ -8,5 +8,6 @@ class RouteName {
   static const addNewNoticeScreen = '/add_notice';
   static const editableNoticeList = '/editable_notice_list';
   static const noticeDetailsScreen = '/notice_details_screen';
+  static const somethingWentWeong = '/something_went_wrong_screen';
   // static const seeAllAnnouncement= ;
 }

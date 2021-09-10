@@ -3,12 +3,12 @@ import 'package:madrasah_app/views/styles/styles.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 class ShowFullAnnoucement extends StatelessWidget {
-  final String accouncementTitle;
-  final String? contentString;
-  final String? pdfURL;
+  final String accouncementTitle, time;
+  final String? contentString, pdfURL;
   ShowFullAnnoucement(
       {Key? key,
       required this.accouncementTitle,
+      required this.time,
       this.pdfURL,
       this.contentString})
       : super(key: key);

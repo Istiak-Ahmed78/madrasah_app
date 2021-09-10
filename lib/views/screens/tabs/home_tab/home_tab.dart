@@ -24,9 +24,11 @@ class HomePage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Announcements',
+                          'Latest announcements',
                           style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 20),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                              fontFamily: Fonts.monserrat),
                         ),
                         ElevatedButton(
                             style: ElevatedButton.styleFrom(
@@ -48,7 +50,11 @@ class HomePage extends StatelessWidget {
                     padding: EdgeInsets.all(10),
                   ),
                 ),
-                const NoticeListWidget()
+                const NoticeListWidget(),
+                SizedBox(
+                  height: Dimensions.mediuim,
+                ),
+                HotItemSection()
               ],
             ),
           ),

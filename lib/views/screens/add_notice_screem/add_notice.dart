@@ -1,4 +1,3 @@
-import 'dart:ffi';
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +14,8 @@ import 'package:madrasah_app/views/styles/styles.dart';
 import 'package:provider/provider.dart';
 
 class AddNoticeScreen extends StatefulWidget {
-  AddNoticeScreen({Key? key}) : super(key: key);
+  final NoticeModel? noticeModel;
+  AddNoticeScreen({Key? key, this.noticeModel}) : super(key: key);
 
   @override
   State<AddNoticeScreen> createState() => _AddNoticeScreenState();
@@ -23,10 +23,10 @@ class AddNoticeScreen extends StatefulWidget {
 
 class _AddNoticeScreenState extends State<AddNoticeScreen> {
   final TextEditingController titleController = TextEditingController();
-
   final TextEditingController decribtionController = TextEditingController();
 
   final fromKey = GlobalKey<FormState>();
+  bool isEdit = false;
   File? selectedFile;
   final border = OutlineInputBorder(
       borderSide: BorderSide.none,
@@ -35,18 +35,43 @@ class _AddNoticeScreenState extends State<AddNoticeScreen> {
   void pickFile() async {
     FilePickerResult? result = await FilePicker.platform
         .pickFiles(type: FileType.custom, allowedExtensions: ['pdf']);
-    if (result != null && result.files.single.size < 10000000) {
-      selectedFile = File(result.files.single.path!);
-      setState(() {});
+    if (result != null) {
+      if (result.files.single.size < 10000000) {
+        selectedFile = File(result.files.single.path!);
+        setState(() {});
+      } else {
+        Methods.showToast(
+            toastMessage: 'File size is too large.',
+            duration: Toast.LENGTH_LONG);
+      }
     } else {
       Methods.showToast(
-          toastMessage: 'File size is too large.', duration: Toast.LENGTH_LONG);
+          toastMessage: 'No file selected.', duration: Toast.LENGTH_LONG);
     }
   }
 
   void removeFile() {
     selectedFile = null;
     setState(() {});
+  }
+
+  void setFieldValues() {
+    titleController.text = widget.noticeModel?.title ?? '';
+    decribtionController.text = widget.noticeModel?.describtion ?? '';
+    isEdit = true;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.noticeModel != null) {
+      setFieldValues();
+    }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
@@ -133,19 +158,16 @@ class _AddNoticeScreenState extends State<AddNoticeScreen> {
                           },
                           buttonText: 'Back'),
                       Button(
-                        buttonText: 'Post the notice',
+                        buttonText:
+                            isEdit ? 'Update notice' : 'Post the notice',
                         onPressed: storageProvider.isLoading
                             ? null
                             : () {
                                 if (fromKey.currentState!.validate()) {
                                   print('Form is valid');
-                                  if (selectedFile != null) {
-                                    Methods.showUploadLoading(
-                                        context: context,
-                                        workTodo: postTheNotice(selectedFile!));
-                                    // storageProviderMuted.uploadMultipleFile(
-                                    //     attachFileState.attachedFiles);
-                                  }
+
+                                  Methods.showUploadLoading(
+                                      context: context, workTodo: setNotice());
                                 }
                               },
                       ),
@@ -160,18 +182,42 @@ class _AddNoticeScreenState extends State<AddNoticeScreen> {
     );
   }
 
-  Future<void> postTheNotice(File fileToUpload) async {
+  Future<void> setNotice() async {
     String noticeId = DateTime.now().toString();
     var storageProvider = Provider.of<StorageState>(context, listen: false);
-    await storageProvider.uploadFile(
-        fileToUpload: selectedFile!, fileName: noticeId);
+    if (selectedFile != null) {
+      await storageProvider.uploadFile(
+          fileToUpload: selectedFile!, fileName: noticeId);
+    }
     NoticeModel noticeModel = NoticeModel(
         title: titleController.text,
         describtion: decribtionController.text,
-        noticeId: noticeId,
-        attachmentLink: storageProvider.imageUrlLink);
-    clearAllData();
-    await services<FirestoreRepos>().addANotice(noticeModel);
+        noticeId: isEdit ? widget.noticeModel!.noticeId : noticeId,
+        attachmentLink: storageProvider.imageUrlLink ?? 'No');
+    if (isEdit) {
+      print(noticeModel.noticeId);
+      await services<FirestoreRepos>()
+          .updateNotice(noticeModel)
+          .timeout(Duration(seconds: 3))
+          .then((value) {
+        clearAllData();
+        Methods.showToast(toastMessage: 'Upadated Successfully');
+        Navigator.pop(context);
+      }).catchError((error, stackTrace) {
+        Methods.showToast(toastMessage: '$error');
+      });
+    } else {
+      await services<FirestoreRepos>()
+          .addANotice(noticeModel)
+          .timeout(Duration(seconds: 3))
+          .then((value) {
+        clearAllData();
+        Methods.showToast(toastMessage: 'Added Successfully');
+        Navigator.pop(context);
+      }).catchError((error, stackTrace) {
+        Methods.showToast(toastMessage: '$error');
+      });
+    }
   }
 
   void clearAllData() {

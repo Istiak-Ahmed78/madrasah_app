@@ -41,7 +41,7 @@ class _InputFieldState extends State<InputField> {
         validator: widget.validator,
         controller: widget.textEditingController,
         maxLength: widget.maxLength,
-        maxLines: widget.maxLines,
+        maxLines: widget.maxLines ?? 1,
         cursorColor: CResources.black,
         obscureText: widget.isPass ? !isShow : false,
         keyboardType: widget.textInputType,
