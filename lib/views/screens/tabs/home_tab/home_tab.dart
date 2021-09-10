@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:madrasah_app/views/route_management/route_name.dart';
 import 'package:madrasah_app/views/screens/tabs/home_tab/components/components.dart';
 import 'package:madrasah_app/views/styles/styles.dart';
 
@@ -23,9 +24,11 @@ class HomePage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Announcements',
+                          'Latest announcements',
                           style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 20),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                              fontFamily: Fonts.monserrat),
                         ),
                         ElevatedButton(
                             style: ElevatedButton.styleFrom(
@@ -33,7 +36,10 @@ class HomePage extends StatelessWidget {
                                 shape: RoundedRectangleBorder(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(20)))),
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.pushNamed(
+                                  context, RouteName.allAnnouncementScreen);
+                            },
                             child: Text(
                               'See all',
                               style: TextStyle(
@@ -44,7 +50,11 @@ class HomePage extends StatelessWidget {
                     padding: EdgeInsets.all(10),
                   ),
                 ),
-                const NewsListWidget()
+                const NoticeListWidget(),
+                SizedBox(
+                  height: Dimensions.mediuim,
+                ),
+                HotItemSection()
               ],
             ),
           ),

@@ -7,14 +7,20 @@ class InputField extends StatefulWidget {
   final bool isPass;
   final TextEditingController textEditingController;
   final TextInputType textInputType;
-  InputField(
-      {Key? key,
-      required this.hintText,
-      this.icon,
-      this.isPass = false,
-      this.textInputType = TextInputType.text,
-      required this.textEditingController})
-      : super(key: key);
+  final String? Function(String?) validator;
+  final int? maxLength;
+  final int? maxLines;
+  InputField({
+    Key? key,
+    required this.hintText,
+    required this.validator,
+    required this.textEditingController,
+    this.icon,
+    this.maxLength,
+    this.maxLines,
+    this.isPass = false,
+    this.textInputType = TextInputType.text,
+  }) : super(key: key);
 
   @override
   _InputFieldState createState() => _InputFieldState();
@@ -30,26 +36,31 @@ class _InputFieldState extends State<InputField> {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 60,
-      child: TextField(
+      // height: 60,
+      child: TextFormField(
+        validator: widget.validator,
         controller: widget.textEditingController,
+        maxLength: widget.maxLength,
+        maxLines: widget.maxLines ?? 1,
         cursorColor: CResources.black,
         obscureText: widget.isPass ? !isShow : false,
         keyboardType: widget.textInputType,
         style: TextStyle(color: CResources.black, fontFamily: Fonts.openSans),
         decoration: InputDecoration(
             hintText: widget.hintText,
+            enabledBorder: border,
+            focusedBorder: border,
+            errorBorder: border,
+            focusedErrorBorder: border,
+            contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
             hintStyle: TextStyle(
               color: CResources.black,
             ),
-            enabledBorder: border,
-            focusedBorder: border,
-            prefixIcon: widget.icon == null
+            prefixIcon: widget.icon != null
                 ? Icon(
                     widget.icon,
                     size: 20,
-                    color:
-                        Theme.of(context).secondaryHeaderColor.withOpacity(0.1),
+                    color: CResources.greyShade,
                   )
                 : null,
             suffixIcon: widget.isPass

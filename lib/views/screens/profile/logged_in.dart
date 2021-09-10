@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:madrasah_app/views/constants.dart';
+import 'package:madrasah_app/state_management/auth_state.dart';
 import 'package:madrasah_app/views/styles/styles.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:provider/provider.dart';
+import '../../../constants.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -30,8 +32,11 @@ class ProfilePage extends StatelessWidget {
                           shape: BoxShape.circle,
                           color: CResources.teal.withOpacity(0.1),
                           image: DecorationImage(
-                              image: NetworkImage(Strings.mohammadSMStory),
+                              image: NetworkImage(Images.girlProfilePicture),
                               fit: BoxFit.cover),
+                          gradient: RadialGradient(
+                              stops: [0.2, 0.7],
+                              colors: [CResources.black, CResources.orange]),
                           boxShadow: [
                             BoxShadow(
                               color: Colors.grey.withOpacity(0.5),
@@ -145,14 +150,17 @@ class ProfilePage extends StatelessWidget {
                   Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: Button(
-                        buttonText: 'Edit your profile',
+                        buttonText: 'Appy for editing your information',
                         onTap: () {},
                       )),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
                     child: Button(
                       buttonText: 'Log out',
-                      onTap: () {},
+                      onTap: () async {
+                        await Provider.of<AuthState>(context, listen: false)
+                            .logOut();
+                      },
                       backGroundColor: CResources.redAccent.withOpacity(0.7),
                       buttonTextColor: CResources.white,
                     ),
@@ -183,7 +191,7 @@ class Button extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      height: 60,
+      height: 40,
       child: MaterialButton(
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(20))),
