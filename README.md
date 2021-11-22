@@ -1,16 +1,23 @@
-# madrasah_app
+# HSFM Log
+Bacically and instite management app. To maintain class shedule, take attendence, posting importent notice etc
 
-A new Flutter project.
+### Some of important sections are
+* Setting announcement
+* Posting blogs to show their telents
+* Avaiable free books
+* Recorded videos of classes
+* Class wise result
 
-## Getting Started
+### Technologies behind the app
+#### Backend
+* firebase
+* google signin
 
-This project is a starting point for a Flutter application.
+### State management
+To manage state of this app I used [Riverpod](https://pub.dev/packages/riverpod)
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+#### To install the project in your IDE
+* Copy the project clone link URL
+* Pest on the clone section on your IDE
+* Write this command to install the packages properly `flutter pub get`
+* Now to run the project in your IDE, run the command `flutter run`
