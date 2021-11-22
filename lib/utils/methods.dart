@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:madrasah_app/globals/controllers/auth_controller.dart';
 import 'package:madrasah_app/models/notice_model.dart';
 import 'package:madrasah_app/state_management/auth_state.dart';
 import 'package:madrasah_app/views/shared_widgets/shared_widgets.dart';
@@ -47,8 +48,7 @@ class Methods {
         actions: [
           TextButton(
               onPressed: () async {
-                await Provider.of<AuthState>(context, listen: false)
-                    .sendVerificationEmail(user);
+                await AuthController().sendVerificationEmail(user);
                 Navigator.pop(context);
               },
               child: const Text('Send verification email again')),

@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:madrasah_app/di_contailer.dart';
+import 'package:madrasah_app/globals/controllers/auth_controller.dart';
 import 'package:madrasah_app/state_management/auth_state.dart';
 import 'package:madrasah_app/utils/auth_repos/auth_repos.dart';
 import 'package:madrasah_app/utils/methods.dart';
@@ -17,7 +17,7 @@ class AdminPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final authStateProvider = Provider.of<AuthState>(context);
+    final authStateProvider = AuthController();
     return Scaffold(
       appBar: AppBar(
         title: Text('Admin Section',
@@ -27,10 +27,10 @@ class AdminPage extends StatelessWidget {
         actions: [
           TextButton(
               onPressed: () {
-                Methods.showLoadingIndicator(
-                    context: context,
-                    workTodo: Provider.of<AuthState>(context, listen: false)
-                        .logOut());
+                // Methods.showLoadingIndicator(
+                //     context: context,
+                //     workTodo: Provider.of<AuthState>(context, listen: false)
+                //         .logOut());
               },
               child: Text(
                 'Log out',
@@ -96,7 +96,8 @@ class AdminPage extends StatelessWidget {
                                     fontFamily: Fonts.monserrat),
                               ),
                               Text(
-                                authStateProvider.getCurrentUser?.displayName ??
+                                authStateProvider
+                                        .currentUserLocal?.displayName ??
                                     'User',
                                 style: TextStyle(
                                     fontFamily: Fonts.openSans,
@@ -113,7 +114,7 @@ class AdminPage extends StatelessWidget {
                                 textAlign: TextAlign.start,
                               ),
                               Text(
-                                authStateProvider.getCurrentUser?.email ??
+                                authStateProvider.currentUserLocal?.email ??
                                     'User',
                                 style: TextStyle(
                                     fontFamily: Fonts.openSans,

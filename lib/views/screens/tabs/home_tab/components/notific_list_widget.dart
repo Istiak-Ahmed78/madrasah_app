@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:madrasah_app/di_contailer.dart';
 import 'package:madrasah_app/models/notice_model.dart';
 import 'package:madrasah_app/utils/firestore_repos/firestore_repos.dart';
 import 'package:madrasah_app/utils/methods.dart';
@@ -21,7 +20,7 @@ class NoticeListWidget extends StatelessWidget {
             borderRadius: BorderRadius.all(Radius.circular(10)),
             border: Border.all(style: BorderStyle.solid, width: 2)),
         child: StreamBuilder(
-          stream: services<FirestoreRepos>().getNoticesStream(),
+          stream: FirestoreRepos().getNoticesStream(),
           builder: (context,
               AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
             if (!snapshot.hasData) {

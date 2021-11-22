@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:madrasah_app/di_contailer.dart';
 import 'package:madrasah_app/models/notice_model.dart';
 import 'package:madrasah_app/utils/fires_storage_repos.dart';
 import 'package:madrasah_app/utils/firestore_repos/firestore_repos.dart';
@@ -52,7 +51,7 @@ class EditableNoticeList extends StatelessWidget {
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         child: StreamBuilder(
-          stream: services<FirestoreRepos>().getNoticesStream(),
+          stream: FirestoreRepos().getNoticesStream(),
           builder: (BuildContext context,
               AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
             if (!snapshot.hasData) {
@@ -139,9 +138,9 @@ class NoticeList extends StatelessWidget {
 
   Future<void> deleteANotice(String noticeId, String? fileUrl) async {
     if (fileUrl != null) {
-      await services<StorageRepo>().daleteFile(fileUrl);
+      await StorageRepo().daleteFile(fileUrl);
     }
-    await services<FirestoreRepos>().deleteANotice(noticeId)
+    await FirestoreRepos().deleteANotice(noticeId)
         // .timeout(Duration(seconds: 3))
         .then((_) {
       Methods.showToast(toastMessage: 'Notice deleted');

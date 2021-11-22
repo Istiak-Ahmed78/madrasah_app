@@ -2,8 +2,8 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:madrasah_app/di_contailer.dart';
 import 'package:madrasah_app/models/notice_model.dart';
+import 'package:madrasah_app/services/cloud_storage.dart';
 import 'package:madrasah_app/state_management/storage_state.dart';
 import 'package:madrasah_app/utils/firestore_repos/firestore_repos.dart';
 import 'package:madrasah_app/utils/form_validation.dart';
@@ -76,7 +76,7 @@ class _AddNoticeScreenState extends State<AddNoticeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var storageProvider = Provider.of<StorageState>(context);
+    var storageProvider = CloudServices();
 
     return Scaffold(
       body: SafeArea(
@@ -184,7 +184,7 @@ class _AddNoticeScreenState extends State<AddNoticeScreen> {
 
   Future<void> setNotice() async {
     String noticeId = DateTime.now().toString();
-    var storageProvider = Provider.of<StorageState>(context, listen: false);
+    var storageProvider = CloudServices();
     if (selectedFile != null) {
       await storageProvider.uploadFile(
           fileToUpload: selectedFile!, fileName: noticeId);
@@ -196,7 +196,7 @@ class _AddNoticeScreenState extends State<AddNoticeScreen> {
         attachmentLink: storageProvider.imageUrlLink ?? 'No');
     if (isEdit) {
       print(noticeModel.noticeId);
-      await services<FirestoreRepos>()
+      await FirestoreRepos()
           .updateNotice(noticeModel)
           .timeout(Duration(seconds: 3))
           .then((value) {
@@ -207,7 +207,7 @@ class _AddNoticeScreenState extends State<AddNoticeScreen> {
         Methods.showToast(toastMessage: '$error');
       });
     } else {
-      await services<FirestoreRepos>()
+      await FirestoreRepos()
           .addANotice(noticeModel)
           .timeout(Duration(seconds: 3))
           .then((value) {

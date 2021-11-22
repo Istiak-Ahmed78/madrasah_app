@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:madrasah_app/globals/controllers/auth_controller.dart';
 import 'package:madrasah_app/state_management/auth_state.dart';
 import 'package:madrasah_app/views/styles/styles.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
@@ -12,165 +14,167 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: CResources.defalutBacGroundColor,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Center(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: size(context).height * 0.1,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Container(
-                        height: 90,
-                        width: 90,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: CResources.teal.withOpacity(0.1),
-                          image: DecorationImage(
-                              image: NetworkImage(Images.girlProfilePicture),
-                              fit: BoxFit.cover),
-                          gradient: RadialGradient(
-                              stops: [0.2, 0.7],
-                              colors: [CResources.black, CResources.orange]),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.5),
-                              spreadRadius: 5,
-                              blurRadius: 7,
-                              offset:
-                                  Offset(0, 3), // changes position of shadow
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        width: 30,
-                      ),
-                      Expanded(
-                        child: Container(
-                          height: 100,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Istiak Ahmed',
-                                style: TextStyle(
-                                    fontFamily: Fonts.openSans,
-                                    fontSize: 25,
-                                    shadows: [
-                                      Shadow(
-                                          color:
-                                              CResources.black.withOpacity(0.3),
-                                          offset: Offset(0, 2))
-                                    ],
-                                    fontWeight: FontWeight.bold),
-                                maxLines: 3,
-                                overflow: TextOverflow.ellipsis,
-                                textAlign: TextAlign.start,
+      body: GetBuilder<AuthController>(builder: (controller) {
+        return SafeArea(
+          child: SingleChildScrollView(
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: size(context).height * 0.1,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Container(
+                          height: 90,
+                          width: 90,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: CResources.teal.withOpacity(0.1),
+                            image: DecorationImage(
+                                image: NetworkImage(Images.girlProfilePicture),
+                                fit: BoxFit.cover),
+                            gradient: RadialGradient(
+                                stops: [0.2, 0.7],
+                                colors: [CResources.black, CResources.orange]),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 5,
+                                blurRadius: 7,
+                                offset:
+                                    Offset(0, 3), // changes position of shadow
                               ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Row(
-                                children: [
-                                  RichText(
-                                      text: TextSpan(children: [
-                                    TextSpan(
-                                        text: 'Class: ',
-                                        style:
-                                            TextStyle(color: CResources.black)),
-                                    TextSpan(
-                                        text: '6',
-                                        style: TextStyle(
-                                            color: CResources.red,
-                                            fontFamily: Fonts.openSans,
-                                            fontWeight: FontWeight.bold))
-                                  ])),
-                                  SizedBox(
-                                    width: 20,
-                                  ),
-                                  RichText(
-                                      text: TextSpan(children: [
-                                    TextSpan(
-                                        text: 'Current Roll no.: ',
-                                        style:
-                                            TextStyle(color: CResources.red)),
-                                    TextSpan(
-                                        text: '23',
-                                        style: TextStyle(
-                                            color: CResources.red,
-                                            fontFamily: Fonts.openSans,
-                                            fontWeight: FontWeight.bold))
-                                  ]))
-                                ],
-                              )
                             ],
                           ),
                         ),
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    height: size(context).height * 0.1,
-                  ),
-                  Row(
-                    children: [
-                      HighlightWidget(
-                        title: 'Awards',
-                        bottomNumer: '2',
-                      ),
-                      HighlightWidget(
-                          title: 'Your published articls', bottomNumer: '03')
-                    ],
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  ),
-                  SizedBox(
-                    height: 50,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Text(
-                        'Your attendence \n status:',
-                        style: TextStyle(fontSize: 20),
-                      ),
-                      PieChart(
-                        persent: 70,
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Button(
-                        buttonText: 'Appy for editing your information',
-                        onTap: () {},
-                      )),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-                    child: Button(
-                      buttonText: 'Log out',
-                      onTap: () async {
-                        await Provider.of<AuthState>(context, listen: false)
-                            .logOut();
-                      },
-                      backGroundColor: CResources.redAccent.withOpacity(0.7),
-                      buttonTextColor: CResources.white,
+                        SizedBox(
+                          width: 30,
+                        ),
+                        Expanded(
+                          child: Container(
+                            height: 100,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Istiak Ahmed',
+                                  style: TextStyle(
+                                      fontFamily: Fonts.openSans,
+                                      fontSize: 25,
+                                      shadows: [
+                                        Shadow(
+                                            color: CResources.black
+                                                .withOpacity(0.3),
+                                            offset: Offset(0, 2))
+                                      ],
+                                      fontWeight: FontWeight.bold),
+                                  maxLines: 3,
+                                  overflow: TextOverflow.ellipsis,
+                                  textAlign: TextAlign.start,
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Row(
+                                  children: [
+                                    RichText(
+                                        text: TextSpan(children: [
+                                      TextSpan(
+                                          text: 'Class: ',
+                                          style: TextStyle(
+                                              color: CResources.black)),
+                                      TextSpan(
+                                          text: '6',
+                                          style: TextStyle(
+                                              color: CResources.red,
+                                              fontFamily: Fonts.openSans,
+                                              fontWeight: FontWeight.bold))
+                                    ])),
+                                    SizedBox(
+                                      width: 20,
+                                    ),
+                                    RichText(
+                                        text: TextSpan(children: [
+                                      TextSpan(
+                                          text: 'Current Roll no.: ',
+                                          style:
+                                              TextStyle(color: CResources.red)),
+                                      TextSpan(
+                                          text: '23',
+                                          style: TextStyle(
+                                              color: CResources.red,
+                                              fontFamily: Fonts.openSans,
+                                              fontWeight: FontWeight.bold))
+                                    ]))
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                        )
+                      ],
                     ),
-                  )
-                ],
+                    SizedBox(
+                      height: size(context).height * 0.1,
+                    ),
+                    Row(
+                      children: [
+                        HighlightWidget(
+                          title: 'Awards',
+                          bottomNumer: '2',
+                        ),
+                        HighlightWidget(
+                            title: 'Your published articls', bottomNumer: '03')
+                      ],
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    ),
+                    SizedBox(
+                      height: 50,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Text(
+                          'Your attendence \n status:',
+                          style: TextStyle(fontSize: 20),
+                        ),
+                        PieChart(
+                          persent: 70,
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Button(
+                          buttonText: 'Appy for editing your information',
+                          onTap: () {},
+                        )),
+                    Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                      child: Button(
+                        buttonText: 'Log out',
+                        onTap: () async {
+                          controller.logOut();
+                        },
+                        backGroundColor: CResources.redAccent.withOpacity(0.7),
+                        buttonTextColor: CResources.white,
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-      ),
+        );
+      }),
     );
   }
 }

@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:madrasah_app/di_contailer.dart';
 import 'package:madrasah_app/models/notice_model.dart';
 import 'package:madrasah_app/utils/firestore_repos/firestore_repos.dart';
 import 'package:madrasah_app/utils/methods.dart';
@@ -38,7 +37,7 @@ class SeeAllAnnouncement extends StatelessWidget {
       backgroundColor: CResources.white,
       body: Container(
           child: FutureBuilder(
-        future: services<FirestoreRepos>().getNoticesSnapshot(),
+        future: FirestoreRepos().getNoticesSnapshot(),
         builder: (BuildContext context,
             AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
           if (snapshot.hasData) {
