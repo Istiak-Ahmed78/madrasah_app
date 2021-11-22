@@ -7,7 +7,6 @@ import 'package:madrasah_app/models/notice_model.dart';
 import 'package:madrasah_app/state_management/auth_state.dart';
 import 'package:madrasah_app/views/shared_widgets/shared_widgets.dart';
 import 'package:madrasah_app/views/styles/colors.dart';
-import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Methods {

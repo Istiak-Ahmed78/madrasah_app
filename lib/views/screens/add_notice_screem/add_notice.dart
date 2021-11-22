@@ -11,7 +11,6 @@ import 'package:madrasah_app/utils/methods.dart';
 import 'package:madrasah_app/views/shared_widgets/input_field.dart';
 import 'package:madrasah_app/views/styles/dimentions.dart';
 import 'package:madrasah_app/views/styles/styles.dart';
-import 'package:provider/provider.dart';
 
 class AddNoticeScreen extends StatefulWidget {
   final NoticeModel? noticeModel;

@@ -8,7 +8,6 @@ import 'package:madrasah_app/utils/methods.dart';
 import 'package:madrasah_app/views/route_management/route_name.dart';
 import 'package:madrasah_app/views/styles/colors.dart';
 import 'package:madrasah_app/views/styles/styles.dart';
-import 'package:provider/provider.dart';
 
 import '../../../constants.dart';
 
