@@ -1,10 +1,10 @@
 # HSFM Log
-Bacically an instite management app. To maintain class shedule, take attendence, posting importent notice etc
+Basically an institute management app. To maintain class schedule, take attendance, posting important notice etc
 
-### Some of important sections are
+### Some of the important sections are
 * Setting announcement
-* Posting blogs to show their telents
-* Avaiable free books
+* Posting blogs to show their talents
+* Available free books
 * Recorded videos of classes
 * Class wise result
 
@@ -14,7 +14,7 @@ Bacically an instite management app. To maintain class shedule, take attendence,
 * google signin
 
 ### State management
-To manage state of this app I used [Riverpod](https://pub.dev/packages/riverpod)
+To manage the state of this app I used [Riverpod](https://pub.dev/packages/riverpod)
 
 #### To run the project in your IDE
 * Copy the project clone link URL
