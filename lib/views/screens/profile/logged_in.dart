@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:madrasah_app/globals/controllers/auth_controller.dart';
-import 'package:madrasah_app/state_management/auth_state.dart';
 import 'package:madrasah_app/views/styles/styles.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import '../../../constants.dart';

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:madrasah_app/globals/controllers/auth_controller.dart';
 import 'package:madrasah_app/models/notice_model.dart';
-import 'package:madrasah_app/state_management/auth_state.dart';
 import 'package:madrasah_app/views/shared_widgets/shared_widgets.dart';
 import 'package:madrasah_app/views/styles/colors.dart';
 import 'package:url_launcher/url_launcher.dart';

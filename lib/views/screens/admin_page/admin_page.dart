@@ -2,9 +2,6 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:madrasah_app/globals/controllers/auth_controller.dart';
-import 'package:madrasah_app/state_management/auth_state.dart';
-import 'package:madrasah_app/utils/auth_repos/auth_repos.dart';
-import 'package:madrasah_app/utils/methods.dart';
 import 'package:madrasah_app/views/route_management/route_name.dart';
 import 'package:madrasah_app/views/styles/colors.dart';
 import 'package:madrasah_app/views/styles/styles.dart';

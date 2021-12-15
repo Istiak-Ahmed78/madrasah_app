@@ -5,6 +5,8 @@ import 'package:madrasah_app/models/auth_respoce_model.dart';
 import 'package:madrasah_app/utils/auth_repos/auth_repos.dart';
 
 class AuthController extends GetxController {
+  AuthController() {}
+
   bool isLoading = true;
   User? currentUserLocal;
   String firebaseLocalErrorMessage = '';
@@ -13,12 +15,6 @@ class AuthController extends GetxController {
   RxBool isLoggedIn = false.obs;
 
   AuthRepos authRepos = AuthRepos();
-
-  Future<void> logOut() async {
-    await authRepos.logout();
-    currentUserLocal = null;
-    update();
-  }
 
   Future<bool> getAdminStatus(emailAddressToCheck) async {
     final adminRecords = [];
@@ -120,5 +116,11 @@ class AuthController extends GetxController {
       update();
       return false;
     }
+  }
+
+  Future<void> logOut() async {
+    await authRepos.logout();
+    currentUserLocal = null;
+    update();
   }
 }
