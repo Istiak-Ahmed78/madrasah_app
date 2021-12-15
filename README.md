@@ -14,7 +14,7 @@ Basically an institute management app. To maintain class schedule, take attendan
 * google signin
 
 ### State management
-To manage the state of this app I used [Riverpod](https://pub.dev/packages/riverpod)
+To manage the state of this app I used [GetX](https://pub.dev/packages/get)
 
 #### To run the project in your IDE
 * Copy the project clone link URL
