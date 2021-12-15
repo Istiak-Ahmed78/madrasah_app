@@ -16,6 +16,9 @@ Basically an institute management app. To maintain class schedule, take attendan
 ### State management
 To manage the state of this app I used [GetX](https://pub.dev/packages/get)
 
+### Architechure
+MVVM architecture used to architect the project
+
 #### To run the project in your IDE
 * Copy the project clone link URL
 * Pest on the clone section on your IDE
