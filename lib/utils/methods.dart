@@ -46,7 +46,7 @@ class Methods {
         actions: [
           TextButton(
               onPressed: () async {
-                await AuthController().sendVerificationEmail(user);
+                // await AuthController.to.sendVerificationEmail(user);
                 Navigator.pop(context);
               },
               child: const Text('Send verification email again')),

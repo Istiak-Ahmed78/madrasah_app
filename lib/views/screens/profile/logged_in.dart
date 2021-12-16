@@ -160,7 +160,7 @@ class ProfilePage extends StatelessWidget {
                       child: Button(
                         buttonText: 'Log out',
                         onTap: () async {
-                          controller.logOut();
+                          // controller.logOut();
                         },
                         backGroundColor: CResources.redAccent.withOpacity(0.7),
                         buttonTextColor: CResources.white,

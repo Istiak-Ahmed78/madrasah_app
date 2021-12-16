@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:madrasah_app/globals/bindings.dart';
 import 'package:madrasah_app/views/route_management/route.dart';
 import 'package:madrasah_app/views/route_management/route_name.dart';
+import 'package:madrasah_app/views/screens/tabs/account_tab/login_screen/login_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,8 +21,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       initialBinding: GlobalBindings(),
       debugShowCheckedModeBanner: false,
-      onGenerateRoute: RouteMangement.generateRoute,
-      initialRoute: RouteName.spleshScreen,
+      home: LogInScreen(),
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),

@@ -92,9 +92,9 @@ class AdminPage extends StatelessWidget {
                                     fontFamily: Fonts.monserrat),
                               ),
                               Text(
-                                authStateProvider
-                                        .currentUserLocal?.displayName ??
-                                    'User',
+                                // authStateProvider
+                                // .currentUserLocal?.displayName ??
+                                'User',
                                 style: TextStyle(
                                     fontFamily: Fonts.openSans,
                                     fontSize: 25,
@@ -110,8 +110,8 @@ class AdminPage extends StatelessWidget {
                                 textAlign: TextAlign.start,
                               ),
                               Text(
-                                authStateProvider.currentUserLocal?.email ??
-                                    'User',
+                                // authStateProvider.currentUserLocal?.email ??
+                                'User',
                                 style: TextStyle(
                                     fontFamily: Fonts.openSans,
                                     fontSize: 20,
