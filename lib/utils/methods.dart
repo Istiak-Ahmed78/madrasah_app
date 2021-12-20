@@ -46,7 +46,7 @@ class Methods {
         actions: [
           TextButton(
               onPressed: () async {
-                await AuthController().sendVerificationEmail(user);
+                // await AuthController.to.sendVerificationEmail(user);
                 Navigator.pop(context);
               },
               child: const Text('Send verification email again')),
@@ -178,18 +178,47 @@ class Methods {
         });
   }
 
-  // static void pay() {
-  //   Sslcommerz sslcommerz = Sslcommerz(
-  //       initializer: SSLCommerzInitialization(
-  //           //   ipn_url: "www.ipnurl.com",
-  //           multi_card_name: "visa,master,bkash",
-  //           currency: SSLCurrencyType.BDT,
-  //           product_category: "Food",
-  //           sdkType: SSLCSdkType.TESTBOX,
-  //           store_id: "ghost611797ae8b447",
-  //           store_passwd: "ghost611797ae8b447@ssl",
-  //           total_amount: 10.0,
-  //           tran_id: "1231321321321312"));
-  //   sslcommerz.payNow();
-  // }
+  static generateExceptionMessage(exceptionCode) {
+    String errorMessage;
+    switch (exceptionCode) {
+      case AuthResultStatus.invalidEmail:
+        errorMessage = "Your email address appears to be malformed.";
+        break;
+      case AuthResultStatus.wrongPassword:
+        errorMessage = "Your password is wrong.";
+        break;
+      case AuthResultStatus.userNotFound:
+        errorMessage = "User with this email doesn't exist.";
+        break;
+      case AuthResultStatus.userDisabled:
+        errorMessage = "User with this email has been disabled.";
+        break;
+      case AuthResultStatus.tooManyRequests:
+        errorMessage = "Too many requests. Try again later.";
+        break;
+      case AuthResultStatus.operationNotAllowed:
+        errorMessage = "Signing in with Email and Password is not enabled.";
+        break;
+      case AuthResultStatus.emailAlreadyExists:
+        errorMessage =
+            "The email has already been registered. Please login or reset your password.";
+        break;
+      default:
+        errorMessage = "An undefined Error happened.";
+    }
+
+    return errorMessage;
+  }
+}
+
+enum AuthResultStatus {
+  successful,
+  emailAlreadyExists,
+  wrongPassword,
+  invalidEmail,
+  userNotFound,
+  userDisabled,
+  operationNotAllowed,
+  tooManyRequests,
+  undefined,
 }
