@@ -1,5 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
-
-extension NummValidation on User? {
+extension NummValidation on dynamic {
   bool isNull() => this == null;
 }
