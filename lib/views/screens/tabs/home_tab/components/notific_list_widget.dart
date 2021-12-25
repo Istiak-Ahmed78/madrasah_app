@@ -1,9 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:madrasah_app/models/notice_model.dart';
 import 'package:madrasah_app/utils/firestore_repos/firestore_repos.dart';
 import 'package:madrasah_app/utils/methods.dart';
-import 'package:madrasah_app/views/route_management/route_name.dart';
+import 'package:madrasah_app/views/screens/notice_details/notice_details_screen.dart';
 import 'package:madrasah_app/views/styles/styles.dart';
 import '../../../../../constants.dart';
 
@@ -75,8 +76,7 @@ class ListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, RouteName.noticeDetailsScreen,
-            arguments: noticeModel);
+        Get.to(() => NoticeDetails(noticeModel: noticeModel));
       },
       child: Container(
         color: CResources.grey.withOpacity(0.2),

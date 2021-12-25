@@ -51,16 +51,4 @@ class Button extends ElevatedButton {
             height: height,
           ),
         );
-  factory Button.icon({
-    
-  }) 
-}
-
-class _ButtonWithIcon extends ElevatedButton {
-    final VoidCallback? onpressed;
-  final Icon icon;
-  _ButtonWithIcon({required this.onpressed,required this.icon}):super(
-    onPressed: onpressed,
-    child: icon
-  );
 }
