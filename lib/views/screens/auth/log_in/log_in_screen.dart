@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:madrasah_app/common_widgets/common_loading.dart';
+import 'package:madrasah_app/common_widgets/shared_widgets.dart';
 import 'package:madrasah_app/globals/controllers/auth_controller.dart';
 import 'package:madrasah_app/utils/form_validation.dart';
-import 'package:madrasah_app/views/shared_widgets/shared_widgets.dart';
 import 'package:madrasah_app/views/styles/colors.dart';
 import 'package:madrasah_app/views/styles/styles.dart';
 import '../../../../../constants.dart';

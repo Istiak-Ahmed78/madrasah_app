@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:madrasah_app/models/notice_model.dart';
 import 'package:madrasah_app/utils/methods.dart';
 import 'package:madrasah_app/views/styles/colors.dart';
@@ -22,8 +23,8 @@ class NoticeDetails extends StatelessWidget {
       ),
       body: SafeArea(
         child: Container(
-          height: size(context).height,
-          width: size(context).width,
+          height: Get.height,
+          width: Get.width,
           padding: EdgeInsets.all(20),
           child: SingleChildScrollView(
             child: Column(

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-Size size(BuildContext context) => MediaQuery.of(context).size;
-
 class Dimensions {
   static const soSmall = 10.0;
   static const small = 15.0;

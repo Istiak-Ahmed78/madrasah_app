@@ -21,7 +21,7 @@ class ProfilePage extends StatelessWidget {
                 child: Column(
                   children: [
                     SizedBox(
-                      height: size(context).height * 0.1,
+                      height: Get.height * 0.1,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -117,7 +117,7 @@ class ProfilePage extends StatelessWidget {
                       ],
                     ),
                     SizedBox(
-                      height: size(context).height * 0.1,
+                      height: Get.height * 0.1,
                     ),
                     Row(
                       children: [
