@@ -1,30 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:madrasah_app/globals/controllers/auth_controller.dart';
+import 'package:madrasah_app/views/screens/auth/log_in/log_in_screen.dart';
 import 'package:madrasah_app/views/screens/nav_bar/nav_bar.dart';
-import 'package:madrasah_app/views/screens/tabs/home_tab/home_tab.dart';
 
-class SplashScreen extends StatefulWidget {
-  const SplashScreen({Key? key}) : super(key: key);
-
-  @override
-  _SplashScreenState createState() => _SplashScreenState();
-}
-
-class _SplashScreenState extends State<SplashScreen> {
-  @override
-  void initState() {
-    super.initState();
-    Future.delayed(Duration(seconds: 2), () {
-      Get.off(() => NavBar());
-    });
-  }
-
+class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Text('L  O  A  D  I  N  G'),
-      ),
-    );
+    return GetX<AuthController>(
+        init: AuthController(),
+        builder: (authController) {
+          if (authController.isLOggedIn.value) {
+            return NavBar();
+          } else {
+            return LogInScreen();
+          }
+        });
   }
 }

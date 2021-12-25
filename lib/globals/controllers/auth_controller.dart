@@ -1,27 +1,22 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:madrasah_app/services/auth.dart';
-import 'package:madrasah_app/views/screens/auth/log_in/log_in_screen.dart';
-import 'package:madrasah_app/views/screens/tabs/home_tab/home_tab.dart';
 
 class AuthController extends GetxController {
   RxBool isLoading = false.obs;
   Rx<User?> currentUser = FirebaseAuth.instance.currentUser.obs;
-  RxBool get isLOggedIn => (currentUser.value != null).obs;
+  RxBool isLOggedIn = false.obs;
 
   static AuthController get to => Get.find();
 
   @override
   onInit() async {
-    User? user = ;
-    currentUser.value = user;
+    isLOggedIn.value = currentUser.value?.uid != null;
     update();
-    ever<bool>(isLOggedIn, (data) {
-      print(data);
-      if (data) {
-        Get.off(HomePage());
-      } else {
-        Get.off(LogInScreen());
+    FirebaseAuth.instance.authStateChanges().listen((event) {
+      if (event == null) {
+        isLOggedIn.value = false;
+        update();
       }
     });
   }
@@ -30,16 +25,22 @@ class AuthController extends GetxController {
     isLoading.value = true;
     update();
     try {
-      currentUser.value =
-          (await AuthenicationServices.login(email, password))?.user;
+      final _user = (await AuthenicationServices.login(email, password))?.user;
+
+      isLoading.value = false;
+      isLOggedIn.value = true;
+      print('Is logged in ${isLOggedIn.value}');
+      update();
     } catch (e) {
+      isLoading.value = false;
+      update();
       print(e.toString());
       Get.snackbar('Error', e.toString(), snackPosition: SnackPosition.BOTTOM);
     }
-
-    isLoading.value = false;
-    update();
   }
 
-  User? getCurrentUsercheck() => FirebaseAuth.instance.currentUser;
+  void logOut() {
+    FirebaseAuth.instance.signOut();
+    update();
+  }
 }

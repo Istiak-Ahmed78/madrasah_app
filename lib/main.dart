@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:madrasah_app/globals/bindings.dart';
 import 'package:madrasah_app/views/screens/auth/log_in/log_in_screen.dart';
+import 'package:madrasah_app/views/screens/splash_screen/splash_screen.dart';
+import 'package:madrasah_app/views/screens/tabs/tabs.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,7 +21,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       initialBinding: GlobalBindings(),
       debugShowCheckedModeBanner: false,
-      home: LogInScreen(),
+      home: SplashScreen(),
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),

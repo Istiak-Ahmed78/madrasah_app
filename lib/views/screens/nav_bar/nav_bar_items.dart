@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:madrasah_app/views/screens/auth/log_in/log_in_screen.dart';
-import 'package:madrasah_app/views/screens/tabs/feeds/feeds.dart';
 import 'package:madrasah_app/views/screens/tabs/tabs.dart';
 
 class NavBarItem {
@@ -16,5 +14,6 @@ class NavBarItem {
         icon: Icons.notifications,
         title: 'Notifications',
         screen: NotificationTab()),
+    NavBarItem(icon: Icons.person, title: 'Profile', screen: ProfilePage())
   ];
 }
