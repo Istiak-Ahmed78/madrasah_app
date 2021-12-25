@@ -1,124 +1,47 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
-import 'package:madrasah_app/constants.dart';
-import 'package:madrasah_app/models/auth_respoce_model.dart';
-import 'package:madrasah_app/utils/auth_repos/auth_repos.dart';
+import 'package:madrasah_app/services/auth.dart';
+import 'package:madrasah_app/views/screens/tabs/account_tab/login_screen/login_screen.dart';
 
 class AuthController extends GetxController {
-  bool isLoading = true;
-  User? currentUserLocal;
-  String firebaseLocalErrorMessage = '';
-  bool isLoadingLocal = false;
-  bool isAdminLocal = false;
+  RxBool isLoading = false.obs;
+  Rx<User?> currentUser = null.obs;
+
   RxBool isLoggedIn = false.obs;
 
-  AuthRepos authRepos = AuthRepos();
+  static AuthController get to => Get.find();
 
-  Future<void> logOut() async {
-    await authRepos.logout();
-    currentUserLocal = null;
-    update();
-  }
-
-  Future<bool> getAdminStatus(emailAddressToCheck) async {
-    final adminRecords = [];
-    if (adminRecords.isEmpty)
-      return false;
-    else {
-      bool check = false;
-      for (var i in adminRecords) {
-        check = i.id == emailAddressToCheck;
+  void onInit() {
+    super.onInit();
+    check();
+    ever(currentUser, (_) {
+      if (currentUser.value == null) {
+        Get.off(() => LogInScreen());
       }
-      isAdminLocal = check;
-      update();
-      return check;
-    }
+    });
   }
 
-  Future<bool> logInwithEmailAndPassword(String email, String password) async {
-    isLoadingLocal = true;
-    firebaseLocalErrorMessage = '';
+  Future<void> signIn({required String email, required String password}) async {
+    isLoading.value = true;
     update();
-    AuthResponce authRespoce =
-        await authRepos.logInWithEmailAndPassword(email, password);
-    if (authRespoce.userCredential != null) {
-      currentUserLocal = authRespoce.userCredential!.user;
-      if (await getAdminStatus(currentUserLocal!.email)) {
-        isAdminLocal = true;
-      }
-      isLoadingLocal = false;
-      update();
-      return true;
-    } else {
-      firebaseLocalErrorMessage =
-          authRespoce.errorMessage ?? FirebaseErrorMessages.defaultErrorMessage;
-      isLoadingLocal = false;
-      update();
-      return false;
-    }
-  }
-
-  Future<void> signInWithGoogle() async {
-    isLoadingLocal = true;
-    update();
-    AuthResponce _authRespoce = await authRepos.signInWithGooglleAccount();
-    if (_authRespoce.userCredential != null) {
-      currentUserLocal = _authRespoce.userCredential!.user;
-      isLoadingLocal = false;
-      update();
-    } else {
-      firebaseLocalErrorMessage = _authRespoce.errorMessage ?? '';
-      isLoadingLocal = false;
-      update();
-    }
-  }
-
-  Future<void> singnInWithFacebook() async {
-    isLoadingLocal = true;
-    update();
-    AuthResponce _authRespoce = await authRepos.signInWithFacebook();
-    if (_authRespoce.userCredential != null) {
-      currentUserLocal = _authRespoce.userCredential!.user;
-      isLoadingLocal = false;
-      update();
-    } else {
-      firebaseLocalErrorMessage = _authRespoce.errorMessage ??
-          FirebaseErrorMessages.defaultErrorMessage;
-      isLoadingLocal = false;
-      update();
-    }
-  }
-
-  Future<void> sendVerificationEmail(User user) =>
-      authRepos.sendEmailVerificationLink(user);
-
-  Future<bool> sendForgetPasswordMail(email) async {
+    User? gottenUser;
     try {
-      await authRepos.sendForgetPassEmail(email);
-      return true;
-    } on FirebaseException catch (e) {
-      firebaseLocalErrorMessage =
-          e.message ?? FirebaseErrorMessages.defaultErrorMessage;
-      update();
-      return false;
+      gottenUser = (await AuthenicationServices.login(email, password))?.user;
+    } catch (e) {
+      print(e.toString());
+      Get.snackbar('Error', e.toString(), snackPosition: SnackPosition.BOTTOM);
     }
+    if (gottenUser != null) {
+      currentUser.value = gottenUser;
+      update();
+    }
+
+    isLoading.value = false;
+    update();
   }
 
-  Future<bool> createUser(String email, String password) async {
-    isLoadingLocal = true;
+  Future check() async {
+    currentUser.value = FirebaseAuth.instance.currentUser;
     update();
-    AuthResponce authRespoce = await authRepos.createNewUser(email, password);
-    if (authRespoce.userCredential != null) {
-      currentUserLocal = authRespoce.userCredential!.user;
-      isLoadingLocal = false;
-      update();
-      return true;
-    } else {
-      firebaseLocalErrorMessage =
-          authRespoce.errorMessage ?? FirebaseErrorMessages.defaultErrorMessage;
-      isLoadingLocal = false;
-      update();
-      return false;
-    }
   }
 }

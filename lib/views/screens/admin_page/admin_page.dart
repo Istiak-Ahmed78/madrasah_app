@@ -2,9 +2,6 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:madrasah_app/globals/controllers/auth_controller.dart';
-import 'package:madrasah_app/state_management/auth_state.dart';
-import 'package:madrasah_app/utils/auth_repos/auth_repos.dart';
-import 'package:madrasah_app/utils/methods.dart';
 import 'package:madrasah_app/views/route_management/route_name.dart';
 import 'package:madrasah_app/views/styles/colors.dart';
 import 'package:madrasah_app/views/styles/styles.dart';
@@ -95,9 +92,9 @@ class AdminPage extends StatelessWidget {
                                     fontFamily: Fonts.monserrat),
                               ),
                               Text(
-                                authStateProvider
-                                        .currentUserLocal?.displayName ??
-                                    'User',
+                                // authStateProvider
+                                // .currentUserLocal?.displayName ??
+                                'User',
                                 style: TextStyle(
                                     fontFamily: Fonts.openSans,
                                     fontSize: 25,
@@ -113,8 +110,8 @@ class AdminPage extends StatelessWidget {
                                 textAlign: TextAlign.start,
                               ),
                               Text(
-                                authStateProvider.currentUserLocal?.email ??
-                                    'User',
+                                // authStateProvider.currentUserLocal?.email ??
+                                'User',
                                 style: TextStyle(
                                     fontFamily: Fonts.openSans,
                                     fontSize: 20,

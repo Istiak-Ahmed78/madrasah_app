@@ -25,6 +25,7 @@ dependencies:
   get: ^4.3.8
   getxfire: ^0.0.1
   google_sign_in: ^5.0.5
+  loading_overlay: ^0.3.0
   percent_indicator: ^3.0.1
   
   syncfusion_flutter_pdfviewer: ^19.1.69-beta
