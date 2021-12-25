@@ -1,11 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:madrasah_app/models/notice_model.dart';
 import 'package:madrasah_app/utils/fires_storage_repos.dart';
 import 'package:madrasah_app/utils/firestore_repos/firestore_repos.dart';
 import 'package:madrasah_app/utils/methods.dart';
-import 'package:madrasah_app/views/route_management/route_name.dart';
+import 'package:madrasah_app/views/screens/add_notice_screem/add_notice.dart';
 import 'package:madrasah_app/views/screens/emty_list_screen/emty_list_screen.dart';
+import 'package:madrasah_app/views/screens/notice_details/notice_details_screen.dart';
 import 'package:madrasah_app/views/screens/something_went_wrong/something_went_wrong.dart';
 import 'package:madrasah_app/views/styles/colors.dart';
 import 'package:madrasah_app/views/styles/fonts.dart';
@@ -23,7 +25,7 @@ class EditableNoticeList extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
-          Navigator.pushNamed(context, RouteName.addNewNoticeScreen);
+          Get.to(() => AddNoticeScreen());
         },
       ),
       appBar: AppBar(
@@ -100,8 +102,8 @@ class NoticeList extends StatelessWidget {
               children: [
                 IconButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, RouteName.addNewNoticeScreen,
-                          arguments: noticeList[index]);
+                      // Navigator.pushNamed(context, RouteName.addNewNoticeScreen,
+                      //     arguments: noticeList[index]);
                     },
                     icon: Icon(Icons.edit)),
                 IconButton(
@@ -126,8 +128,7 @@ class NoticeList extends StatelessWidget {
             ),
           ),
           onTap: () {
-            Navigator.pushNamed(context, RouteName.noticeDetailsScreen,
-                arguments: noticeList[index]);
+            // Get.to(()=> NoticeDetails(noticeModel: noticeModel));
           },
         ),
         itemCount: noticeList.length,

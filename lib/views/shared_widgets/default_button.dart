@@ -34,3 +34,21 @@ class DefaultButton extends StatelessWidget {
         ));
   }
 }
+
+class Button extends ElevatedButton {
+  final VoidCallback? onpressed;
+  final Widget child;
+  final double? height;
+  final double? weight;
+  Button(
+      {required this.onpressed,
+      required this.child,
+      this.height = 50.0,
+      this.weight = 90.0})
+      : super(
+          onPressed: onpressed,
+          child: SizedBox(
+            height: height,
+          ),
+        );
+}

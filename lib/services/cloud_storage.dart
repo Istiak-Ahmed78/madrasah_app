@@ -4,7 +4,6 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
 import 'package:madrasah_app/constants.dart';
 import 'package:madrasah_app/utils/fires_storage_repos.dart';
-import 'package:madrasah_app/utils/methods.dart';
 
 class CloudServices extends GetxController {
   double uploadPersentValue = 0.0;
@@ -39,14 +38,6 @@ class CloudServices extends GetxController {
         errorMessageLocal = error.code;
         update();
       }
-      Methods.showToast(toastMessage: errorMessageLocal);
     }
-  }
-
-  void gotoInitial() {
-    isDoneLocal = false;
-    isLoadingLocal = false;
-    uploadPersentValue = 0.0;
-    update();
   }
 }

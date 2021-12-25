@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:madrasah_app/views/route_management/route_name.dart';
+import 'package:get/get.dart';
+import 'package:madrasah_app/views/screens/see_all_announcements/see_all_announcements.dart';
 import 'package:madrasah_app/views/screens/tabs/home_tab/components/components.dart';
 import 'package:madrasah_app/views/styles/styles.dart';
 
@@ -37,8 +38,7 @@ class HomePage extends StatelessWidget {
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(20)))),
                             onPressed: () {
-                              Navigator.pushNamed(
-                                  context, RouteName.allAnnouncementScreen);
+                              Get.to(() => SeeAllAnnouncement());
                             },
                             child: Text(
                               'See all',

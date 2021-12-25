@@ -5,7 +5,7 @@ import 'package:madrasah_app/services/cloud_storage.dart';
 class GlobalBindings extends Bindings {
   @override
   void dependencies() {
-    Get.put(AuthController());
+    Get.lazyPut<AuthController>(() => AuthController());
     Get.put(CloudServices());
   }
 }

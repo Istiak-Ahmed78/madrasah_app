@@ -7,6 +7,7 @@ class AuthenicationServices {
     try {
       var d = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
+
       return d;
     } catch (e) {
       // print();

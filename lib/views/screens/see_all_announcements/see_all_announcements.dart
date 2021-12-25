@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:get/get.dart';
 import 'package:madrasah_app/models/notice_model.dart';
 import 'package:madrasah_app/utils/firestore_repos/firestore_repos.dart';
 import 'package:madrasah_app/utils/methods.dart';
-import 'package:madrasah_app/views/route_management/route_name.dart';
 import 'package:madrasah_app/views/screens/emty_list_screen/emty_list_screen.dart';
+import 'package:madrasah_app/views/screens/notice_details/notice_details_screen.dart';
 import 'package:madrasah_app/views/screens/something_went_wrong/something_went_wrong.dart';
-import 'package:madrasah_app/views/styles/colors.dart';
 import 'package:madrasah_app/views/styles/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -76,8 +76,7 @@ class AnnouncementItem extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: GestureDetector(
         onTap: () {
-          Navigator.pushNamed(context, RouteName.noticeDetailsScreen,
-              arguments: noticeModel);
+          Get.to(() => NoticeDetails(noticeModel: noticeModel));
         },
         child: Card(
           color: CResources.lightGrey,
