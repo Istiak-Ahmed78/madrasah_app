@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:madrasah_app/models/notice_model.dart';
-import 'package:madrasah_app/utils/firestore_repos/firestore_repos.dart';
+import 'package:madrasah_app/services/cloud_services.dart';
 import 'package:madrasah_app/utils/methods.dart';
 import 'package:madrasah_app/views/screens/notice_details/notice_details_screen.dart';
 import 'package:madrasah_app/views/styles/styles.dart';
