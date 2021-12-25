@@ -25,7 +25,7 @@ class AuthController extends GetxController {
     isLoading.value = true;
     update();
     try {
-      final _user = (await AuthenicationServices.login(email, password))?.user;
+      await AuthenicationServices.login(email, password);
 
       isLoading.value = false;
       isLOggedIn.value = true;

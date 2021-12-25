@@ -22,22 +22,6 @@ class FormValidation {
     }
   }
 
-  static String? validateConfirmPassword(bool didMatch) {
-    if (!didMatch) {
-      return 'Confirm password didn\'t match';
-    } else {
-      return null;
-    }
-  }
-
-  static String? validateAdress(value) {
-    if (value == null || value == '') {
-      return 'Full name field requred';
-    } else {
-      return null;
-    }
-  }
-
   static String? validateNoticeTitle(value) {
     if (value.isEmpty || value == null)
       return 'Please enter a title for this notice.';
@@ -47,15 +31,5 @@ class FormValidation {
       return 'Enter a valid title';
     else
       return null;
-  }
-
-  static String? valofateFullName(value) {
-    if (value == null || value == '') {
-      return 'Full name field requred';
-    } else if (value.length < 7) {
-      return 'Enter your full name';
-    } else {
-      return null;
-    }
   }
 }
